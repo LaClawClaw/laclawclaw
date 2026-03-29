@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  --color-neon-pink: #ff2d7b;
+  --color-neon-blue: #00d4ff;
+  --color-neon-purple: #b44dff;
+  --color-neon-green: #39ff14;
+  --color-arcade-dark: #0a0a12;
+  --color-arcade-card: #12121f;
+  --color-arcade-border: #1e1e35;
+  --color-warm-cream: #fff8f0;
+  --color-plush-pink: #ffb3d9;
+  --color-plush-lavender: #c9b3ff;
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  body {
+    background: var(--color-arcade-dark);
+    color: #e8e8f0;
+    font-family: var(--font-body);
+  }
+}
+
+/* Neon glow utilities */
+.glow-pink {
+  text-shadow: 0 0 10px var(--color-neon-pink), 0 0 40px color-mix(in srgb, var(--color-neon-pink), transparent 60%);
+}
+.glow-blue {
+  text-shadow: 0 0 10px var(--color-neon-blue), 0 0 40px color-mix(in srgb, var(--color-neon-blue), transparent 60%);
+}
+.glow-purple {
+  text-shadow: 0 0 10px var(--color-neon-purple), 0 0 40px color-mix(in srgb, var(--color-neon-purple), transparent 60%);
+}
+
+.box-glow-pink {
+  box-shadow: 0 0 15px color-mix(in srgb, var(--color-neon-pink), transparent 70%),
+              inset 0 0 15px color-mix(in srgb, var(--color-neon-pink), transparent 90%);
+}
+.box-glow-blue {
+  box-shadow: 0 0 15px color-mix(in srgb, var(--color-neon-blue), transparent 70%),
+              inset 0 0 15px color-mix(in srgb, var(--color-neon-blue), transparent 90%);
+}
+
+/* Claw machine glass effect */
+.glass {
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Arcade scanline overlay */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+}
+
+/* Plush soft shadow */
+.plush-shadow {
+  filter: drop-shadow(0 8px 24px rgba(255, 45, 123, 0.15));
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes claw-grab {
+  0% { transform: translateY(-100%) scaleX(1); }
+  40% { transform: translateY(0%) scaleX(1); }
+  50% { transform: translateY(0%) scaleX(0.85); }
+  60% { transform: translateY(0%) scaleX(0.85); }
+  80% { transform: translateY(-100%) scaleX(0.85); }
+  100% { transform: translateY(-100%) scaleX(1); }
+}
+.animate-claw {
+  animation: claw-grab 3s ease-in-out infinite;
+}
+
+@keyframes pulse-neon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+.animate-neon-pulse {
+  animation: pulse-neon 2s ease-in-out infinite;
+}

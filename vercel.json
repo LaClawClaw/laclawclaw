@@ -1,10 +1,5 @@
 {
-  "buildCommand": null,
-  "outputDirectory": "landing",
-  "framework": null,
-  "rewrites": [
-    { "source": "/.well-known/agent.json", "destination": "/.well-known/agent.json" }
-  ],
+  "framework": "nextjs",
   "headers": [
     {
       "source": "/(.*)",
