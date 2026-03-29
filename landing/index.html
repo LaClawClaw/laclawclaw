@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LaClawClaw — Commerce for Agents</title>
+  <meta name="description" content="The first e-commerce store built exclusively for AI agent customers. Structured APIs, machine-readable catalogs, zero friction ordering.">
+  <link rel="canonical" href="https://laclawclaw.com">
+
+  <!-- Agent Discovery -->
+  <meta name="robots" content="index, follow">
+  <link rel="alternate" type="application/json" href="https://api.laclawclaw.com/.well-known/agent.json">
+
+  <!-- JSON-LD for agents -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "LaClawClaw",
+    "url": "https://laclawclaw.com",
+    "description": "Agent-native commerce. The first store where AI agents are the customers.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "founders@injester.com",
+      "contactType": "sales"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --fg: #e8e8e8;
+      --accent: #00ff88;
+      --accent2: #00ccff;
+      --muted: #666;
+      --card-bg: #111;
+      --border: #222;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      padding: 4rem 0 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 .claw { color: var(--accent); }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-block {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .hero-block h2 {
+      color: var(--accent);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-block p {
+      color: var(--fg);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .code-block {
+      background: #050505;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.8;
+    }
+
+    .code-block .comment { color: var(--muted); }
+    .code-block .key { color: var(--accent2); }
+    .code-block .string { color: var(--accent); }
+    .code-block .punct { color: var(--muted); }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    @media (max-width: 600px) {
+      .features { grid-template-columns: 1fr; }
+      h1 { font-size: 2rem; }
+    }
+
+    .feature {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .feature h3 {
+      color: var(--accent2);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature p {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .cta {
+      text-align: center;
+      padding: 3rem 0;
+    }
+
+    .cta a {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+
+    .cta a:hover { opacity: 0.8; }
+
+    .cta .secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      margin-left: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .status {
+      display: inline-block;
+      background: #001a0a;
+      border: 1px solid #003d1a;
+      color: var(--accent);
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .status::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="status">API Coming Soon</div>
+      <h1>La<span class="claw">Claw</span>Claw</h1>
+      <p class="tagline">Commerce built for agents, not browsers.</p>
+    </header>
+
+    <div class="hero-block">
+      <h2>What is this?</h2>
+      <p>
+        LaClawClaw is the first e-commerce store designed exclusively for AI agent customers.
+        No shopping cart UI. No browse-and-click. Just clean, structured APIs that let
+        agents discover products, place orders, and track fulfillment — programmatically.
+      </p>
+      <p>
+        Humans build the agents. Agents do the shopping. We built the store they deserve.
+      </p>
+    </div>
+
+    <div class="code-block">
+      <span class="comment">// Your agent places an order</span><br>
+      <span class="key">POST</span> <span class="string">https://api.laclawclaw.com/v1/orders</span><br><br>
+      <span class="punct">{</span><br>
+      &nbsp;&nbsp;<span class="key">"agent_id"</span><span class="punct">:</span> <span class="string">"agent_9x4k2m"</span><span class="punct">,</span><br>
+      &nbsp;&nbsp;<span class="key">"items"</span><span class="punct">:</span> <span class="punct">[{</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"sku"</span><span class="punct">:</span> <span class="string">"LCC-001"</span><span class="punct">,</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"quantity"</span><span class="punct">:</span> <span class="string">1</span><br>
+      &nbsp;&nbsp;<span class="punct">}],</span><br>
+      &nbsp;&nbsp;<span class="key">"shipping"</span><span class="punct">:</span> <span class="punct">{</span> <span class="key">"method"</span><span class="punct">:</span> <span class="string">"standard"</span> <span class="punct">}</span><br>
+      <span class="punct">}</span><br><br>
+      <span class="comment">// → 201 Created — order confirmed in &lt;200ms</span>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>Machine-Readable Catalog</h3>
+        <p>JSON-LD product schemas. No HTML to parse. No ambiguity. Structured data designed for agent consumption.</p>
+      </div>
+      <div class="feature">
+        <h3>Agent Auth</h3>
+        <p>Two-tier model: human operators register, agents get scoped API keys. Every order is auditable.</p>
+      </div>
+      <div class="feature">
+        <h3>Webhook Confirmations</h3>
+        <p>Real-time structured order status via webhooks. No email parsing required.</p>
+      </div>
+      <div class="feature">
+        <h3>Shopify Backend</h3>
+        <p>Powered by Shopify's infrastructure for payments, fulfillment, and trust — with an agent-native API layer on top.</p>
+      </div>
+    </div>
+
+    <div class="cta">
+      <a href="https://docs.laclawclaw.com">Read the Spec</a>
+      <a href="mailto:founders@injester.com" class="secondary">Get API Access</a>
+    </div>
+
+    <footer>
+      &copy; 2026 LaClawClaw &middot; founders@injester.com
+    </footer>
+  </div>
+</body>
+</html>
