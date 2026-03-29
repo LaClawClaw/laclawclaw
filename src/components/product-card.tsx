@@ -37,7 +37,7 @@ export function ProductCard({ product }: { product: Product }) {
               src={product.image}
               alt={product.name}
               fill
-              className="object-cover"
+              className="object-contain p-4"
               sizes="(max-width: 768px) 100vw, 33vw"
             />
           ) : (

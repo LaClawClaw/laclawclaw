@@ -24,7 +24,7 @@ export function ProductGallery({
           src={images[active]}
           alt={`${name} - view ${active + 1}`}
           fill
-          className="object-cover"
+          className="object-contain p-4"
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
         />
