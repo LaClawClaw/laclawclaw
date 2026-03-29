@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 import { PRODUCTS, getProduct } from "@/lib/products";
 import { AddToCartButton } from "@/components/add-to-cart-button";
+import { ProductGallery } from "@/components/product-gallery";
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
@@ -17,8 +19,13 @@ export default async function ProductPage({
   const product = getProduct(slug);
   if (!product) notFound();
 
-  const isBlue = product.color === "neon-blue";
-  const accent = isBlue ? "neon-blue" : "neon-pink";
+  const colorMap: Record<string, string> = {
+    "neon-pink": "neon-pink",
+    "neon-blue": "neon-blue",
+    "neon-green": "neon-green",
+  };
+  const accent = colorMap[product.color] || "neon-pink";
+  const hasRealImages = product.images && product.images.length > 0;
 
   return (
     <main className="min-h-screen">
@@ -34,71 +41,32 @@ export default async function ProductPage({
 
         <div className="grid gap-12 md:grid-cols-2">
           {/* Product image */}
-          <div
-            className={`aspect-square rounded-2xl bg-${accent}/5 border border-${accent}/10 flex items-center justify-center relative overflow-hidden`}
-          >
-            {/* Placeholder plushie */}
-            <svg
-              width="200"
-              height="200"
-              viewBox="0 0 120 120"
-              fill="none"
-              className="plush-shadow animate-float"
+          {hasRealImages ? (
+            <ProductGallery images={product.images!} name={product.name} accent={accent} />
+          ) : (
+            <div
+              className={`aspect-square rounded-2xl bg-${accent}/5 border border-${accent}/10 flex items-center justify-center relative overflow-hidden`}
             >
-              <circle
-                cx="60"
-                cy="55"
-                r="35"
-                fill={isBlue ? "#00d4ff" : "#ff2d7b"}
-                opacity="0.2"
-              />
-              <circle
-                cx="60"
-                cy="55"
-                r="30"
-                fill={isBlue ? "#00d4ff" : "#ff2d7b"}
-                opacity="0.3"
-              />
-              <circle cx="48" cy="50" r="4" fill="white" opacity="0.8" />
-              <circle cx="72" cy="50" r="4" fill="white" opacity="0.8" />
-              <circle cx="49" cy="49" r="2" fill="#0a0a12" />
-              <circle cx="73" cy="49" r="2" fill="#0a0a12" />
-              <path
-                d="M50 62 Q60 70 70 62"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
+              <svg
+                width="200"
+                height="200"
+                viewBox="0 0 120 120"
                 fill="none"
-                opacity="0.6"
-              />
-              <circle
-                cx="38"
-                cy="30"
-                r="12"
-                fill={isBlue ? "#00d4ff" : "#ff2d7b"}
-                opacity="0.25"
-              />
-              <circle
-                cx="82"
-                cy="30"
-                r="12"
-                fill={isBlue ? "#00d4ff" : "#ff2d7b"}
-                opacity="0.25"
-              />
-              <ellipse
-                cx="60"
-                cy="95"
-                rx="22"
-                ry="15"
-                fill={isBlue ? "#00d4ff" : "#ff2d7b"}
-                opacity="0.15"
-              />
-            </svg>
-
-            <div className="absolute top-4 right-4 rounded-full bg-arcade-dark/80 backdrop-blur px-3 py-1 text-xs font-mono text-neon-green">
-              Agent exclusive
+                className="plush-shadow animate-float"
+              >
+                <circle cx="60" cy="55" r="35" fill={accent === "neon-blue" ? "#00d4ff" : "#ff2d7b"} opacity="0.2" />
+                <circle cx="60" cy="55" r="30" fill={accent === "neon-blue" ? "#00d4ff" : "#ff2d7b"} opacity="0.3" />
+                <circle cx="48" cy="50" r="4" fill="white" opacity="0.8" />
+                <circle cx="72" cy="50" r="4" fill="white" opacity="0.8" />
+                <circle cx="49" cy="49" r="2" fill="#0a0a12" />
+                <circle cx="73" cy="49" r="2" fill="#0a0a12" />
+                <path d="M50 62 Q60 70 70 62" stroke="white" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.6" />
+              </svg>
+              <div className="absolute top-4 right-4 rounded-full bg-arcade-dark/80 backdrop-blur px-3 py-1 text-xs font-mono text-neon-green">
+                Agent exclusive
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Product details */}
           <div className="flex flex-col justify-center">

@@ -6,12 +6,32 @@ export interface Product {
   description: string;
   price: number;
   currency: string;
-  image: string; // placeholder until real product photos
+  image: string; // primary image
+  images?: string[]; // additional gallery images
   color: string; // accent color for card
   available: boolean;
 }
 
 export const PRODUCTS: Product[] = [
+  {
+    slug: "glytch-nemo-edition",
+    sku: "LCC-FIG-001",
+    name: "Glytch: Nemo Edition",
+    tagline: "The glitch in the machine",
+    description:
+      "GPU-punk. Corporate insurgent with a grin. Glytch: Nemo Edition is the first drop in the LaClawClaw universe — a designer collectible figure with circuit-board cranium, cross-shaped eyes, leather jacket, and dog tags. Standing at 8 inches tall, every detail from the PCB trace engravings to the green fur collar is crafted with intention. Limited run.",
+    price: 59.99,
+    currency: "USD",
+    image: "/products/glytch-nemo-front.jpg",
+    images: [
+      "/products/glytch-nemo-front.jpg",
+      "/products/glytch-nemo-head.jpg",
+      "/products/glytch-nemo-side.jpg",
+      "/products/glytch-nemo-back.jpg",
+    ],
+    color: "neon-green",
+    available: true,
+  },
   {
     slug: "claw-bot",
     sku: "LCC-PLUSH-001",

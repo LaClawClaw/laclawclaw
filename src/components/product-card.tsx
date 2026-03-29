@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Product } from "@/lib/products";
 
 export function ProductCard({ product }: { product: Product }) {
@@ -13,8 +14,14 @@ export function ProductCard({ product }: { product: Product }) {
       text: "text-neon-blue",
       glow: "group-hover:box-glow-blue",
     },
+    "neon-green": {
+      bg: "bg-neon-green/10",
+      text: "text-neon-green",
+      glow: "group-hover:box-glow-green",
+    },
   };
   const colors = colorMap[product.color] || colorMap["neon-pink"];
+  const hasRealImage = product.image && !product.image.includes("placeholder");
 
   return (
     <Link href={`/products/${product.slug}`} className="group block">
@@ -25,7 +32,17 @@ export function ProductCard({ product }: { product: Product }) {
         <div
           className={`relative aspect-square ${colors.bg} flex items-center justify-center overflow-hidden`}
         >
-          <PlaceholderPlushie color={product.color} name={product.name} />
+          {hasRealImage ? (
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          ) : (
+            <PlaceholderPlushie color={product.color} name={product.name} />
+          )}
 
           {/* "Agent exclusive" badge */}
           <div className="absolute top-4 right-4 rounded-full bg-arcade-dark/80 backdrop-blur px-3 py-1 text-xs font-mono text-neon-green">
@@ -75,7 +92,6 @@ function PlaceholderPlushie({
         fill="none"
         className="plush-shadow"
       >
-        {/* Simple plushie silhouette */}
         <circle
           cx="60"
           cy="55"
@@ -90,12 +106,10 @@ function PlaceholderPlushie({
           fill={isBlue ? "#00d4ff" : "#ff2d7b"}
           opacity="0.3"
         />
-        {/* Eyes */}
         <circle cx="48" cy="50" r="4" fill="white" opacity="0.8" />
         <circle cx="72" cy="50" r="4" fill="white" opacity="0.8" />
         <circle cx="49" cy="49" r="2" fill="#0a0a12" />
         <circle cx="73" cy="49" r="2" fill="#0a0a12" />
-        {/* Smile */}
         <path
           d="M50 62 Q60 70 70 62"
           stroke="white"
@@ -104,7 +118,6 @@ function PlaceholderPlushie({
           fill="none"
           opacity="0.6"
         />
-        {/* Ears */}
         <circle
           cx="38"
           cy="30"
@@ -119,7 +132,6 @@ function PlaceholderPlushie({
           fill={isBlue ? "#00d4ff" : "#ff2d7b"}
           opacity="0.25"
         />
-        {/* Body */}
         <ellipse
           cx="60"
           cy="95"

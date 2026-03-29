@@ -44,6 +44,10 @@
   box-shadow: 0 0 15px color-mix(in srgb, var(--color-neon-blue), transparent 70%),
               inset 0 0 15px color-mix(in srgb, var(--color-neon-blue), transparent 90%);
 }
+.box-glow-green {
+  box-shadow: 0 0 15px color-mix(in srgb, var(--color-neon-green), transparent 70%),
+              inset 0 0 15px color-mix(in srgb, var(--color-neon-green), transparent 90%);
+}
 
 /* Claw machine glass effect */
 .glass {
