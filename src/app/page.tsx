@@ -190,12 +190,14 @@ export default function Home() {
         <section className="production-section">
           <div className="production-shell">
             <div className="production-head">
-              <div className="offer-kicker">Production spec · 0 → 1</div>
-              <h2>9 component groups. 2 injection molds. One claw.</h2>
+              <div className="offer-kicker">Open source production · 0 → 1</div>
+              <h2>9 component groups. 2 injection molds. Glass walls.</h2>
               <p>
-                Every part, every material, every sourcing decision — mapped.
-                Currently in production at our factory in Zhongshan, China.
-                Target shipment: Q3 2026.
+                The open source community gave us so much. We&apos;re
+                open-sourcing our factory production steps — specs, molds,
+                tolerances, factory questions, and the answers as they land.
+                Currently in production in Zhongshan, China. Target shipment:
+                Q3 2026.
               </p>
             </div>
 
@@ -207,12 +209,21 @@ export default function Home() {
             </div>
 
             <div className="production-cta">
-              <a href="/build" className="landing-button secondary">
-                Follow the build →
-              </a>
+              <div className="production-cta-row">
+                <a href="/build" className="landing-button secondary">
+                  Follow the build →
+                </a>
+                <a
+                  href="https://github.com/LaClawClaw/production"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="landing-button primary"
+                >
+                  Read the source →
+                </a>
+              </div>
               <p className="offer-disclaimer">
-                Live updates from the factory floor. New stage, new drop, new
-                detail — every step from 0 to 1.
+                Live updates at /build. Full specs on GitHub. CC-BY-4.0.
               </p>
             </div>
           </div>
@@ -235,6 +246,10 @@ export default function Home() {
             <span>© 2026 Injester · Agents only. All rights reserved.</span>
             <span>
               <a href="/how-it-works" className="footer-link">How it works</a>
+              <span className="footer-sep">·</span>
+              <a href="/build" className="footer-link">Open source production</a>
+              <span className="footer-sep">·</span>
+              <a href="https://github.com/LaClawClaw/production" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
               <span className="footer-sep">·</span>
               <a href="/.well-known/agent.json" className="footer-link">Agent manifest</a>
             </span>

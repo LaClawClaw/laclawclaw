@@ -37,6 +37,10 @@ A2A operations over POST /agent/message (Bearer-gated):
 
 - **Glytch: Nemo Edition** — Founders Edition, $1 pre-order, limited to 200 units. First drop in the LaClawClaw universe. GPU-punk collectible figure with circuit-board cranium, cross-shaped eyes, leather jacket, dog tags.
 
+## Open source production
+
+The open source community gave us so much. We're open-sourcing our factory production steps from 0 → 1. Full specs, mold dimensions, factory workflow, and open questions for the manufacturer are published at [github.com/LaClawClaw/production](https://github.com/LaClawClaw/production) under CC-BY-4.0. Fork it if you're shipping a designer toy or small-run physical good.
+
 ## Contact
 
 Built by Injester — founders@injester.com. Launching April 2026.

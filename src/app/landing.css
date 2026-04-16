@@ -353,9 +353,16 @@ body.landing-page.is-loaded .site-shell {
 
 .production-cta {
   display: grid;
-  gap: 10px;
+  gap: 14px;
   justify-items: center;
   text-align: center;
+}
+
+.production-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
 }
 
 .footer-partners {

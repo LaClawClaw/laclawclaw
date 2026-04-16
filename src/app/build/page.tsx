@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Build log — Glytch: Nemo Edition · 0 → 1",
+  title: "Open source production · LaClawClaw · 0 → 1",
   description:
-    "Live updates from the LaClawClaw factory floor in Zhongshan. Every stage from industrial design to final shipment. Follow along.",
+    "The open source community gave us so much. We're open-sourcing our factory production steps from 0 → 1. Every stage from spec to shipment, published live.",
 };
 
 type Entry = {
@@ -112,6 +112,50 @@ export default function BuildLog() {
           line-height: 1.55;
           max-width: 700px;
         }
+        .build-hero p.manifesto {
+          font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+          font-weight: 600;
+          color: rgba(255,255,255,0.92);
+          letter-spacing: -0.01em;
+          line-height: 1.45;
+        }
+
+        .source-row {
+          display: flex;
+          gap: 16px;
+          align-items: flex-start;
+          padding: 20px 22px;
+          background: rgba(155,231,201,0.05);
+          border: 1px solid rgba(155,231,201,0.2);
+          border-radius: 14px;
+        }
+        .source-icon {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 1.4rem;
+          color: #9be7c9;
+          flex-shrink: 0;
+          line-height: 1;
+          padding-top: 2px;
+        }
+        .source-title {
+          font-weight: 700;
+          color: #fff;
+          margin-bottom: 4px;
+          letter-spacing: -0.01em;
+        }
+        .source-desc {
+          color: rgba(255,255,255,0.78);
+          font-size: 0.96rem;
+          line-height: 1.55;
+        }
+        .source-desc a {
+          color: #9be7c9;
+          text-decoration: none;
+          font-weight: 600;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 0.92rem;
+        }
+        .source-desc a:hover { text-decoration: underline; }
 
         .notify-row {
           display: flex;
@@ -222,15 +266,38 @@ export default function BuildLog() {
       <a href="/" className="back-home">← laclawclaw.com</a>
 
       <section className="build-hero">
-        <span className="eyebrow-tag">Build log · 0 → 1</span>
+        <span className="eyebrow-tag">Open source production · 0 → 1</span>
         <h1>From spec sheet to shelf.</h1>
+        <p className="manifesto">
+          The open source community has given us so much.
+          We&apos;re open-sourcing our factory production steps from 0 → 1.
+        </p>
         <p>
-          Glytch: Nemo Edition is being manufactured in Zhongshan, China. We&apos;re
-          posting every meaningful stage — mold pulls, prototype reviews, QC
-          passes, packing, shipment. No PR gloss. Raw production log. If you
-          pre-ordered, this is the receipt trail.
+          Glytch: Nemo Edition is being manufactured in Zhongshan, China. Every
+          mold pull, prototype review, QC pass, and shipment gets posted here —
+          raw, real-time, no PR gloss, no NDA. Glass walls. If you pre-ordered,
+          this is the receipt trail.
         </p>
       </section>
+
+      <div className="source-row">
+        <div className="source-icon">{"{/}"}</div>
+        <div className="source-body">
+          <div className="source-title">Read the source</div>
+          <div className="source-desc">
+            Full specs, mold targets, factory questions, and parts diagrams
+            live at{" "}
+            <a
+              href="https://github.com/LaClawClaw/production"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              github.com/LaClawClaw/production
+            </a>
+            . Fork it, learn from it, cite it. CC-BY-4.0.
+          </div>
+        </div>
+      </div>
 
       <div className="notify-row">
         <strong>Follow along:</strong>
