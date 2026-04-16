@@ -291,7 +291,9 @@ export default function Home() {
 
         <footer className="site-footer">
           <div className="footer-partners">
-            <span className="partners-label">Launch partners</span>
+            <span className="partners-label">Standards &amp; partners</span>
+            <a href="https://agentwebprotocol.org" target="_blank" rel="noopener noreferrer" className="partner-link">AWP</a>
+            <span className="footer-sep">·</span>
             <a href="https://nebius.com" target="_blank" rel="noopener noreferrer" className="partner-link">Nebius</a>
             <span className="footer-sep">·</span>
             <a href="https://tavily.com" target="_blank" rel="noopener noreferrer" className="partner-link">Tavily</a>

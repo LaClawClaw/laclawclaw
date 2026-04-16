@@ -444,6 +444,32 @@ export default function HowItWorks() {
             . Same folks behind LaClawClaw — we wrote the spec, shipped the
             validator, and made this store the reference implementation.
           </p>
+          <div className="cta-row" style={{ marginTop: "8px" }}>
+            <a
+              href="https://agentwebprotocol.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-btn primary"
+            >
+              Read the AWP spec →
+            </a>
+            <a
+              href="https://agentwebprotocol.org/spec"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-btn secondary"
+            >
+              Full specification
+            </a>
+            <a
+              href="https://www.npmjs.com/package/agent-json"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-btn secondary"
+            >
+              agent-json on npm
+            </a>
+          </div>
         </div>
       </section>
 

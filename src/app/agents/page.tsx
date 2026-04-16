@@ -483,6 +483,7 @@ export default function AgentsGate() {
             <div className="byo-links">
               <a href="/how-it-works" className="byo-link">Protocol explainer →</a>
               <a href="/.well-known/agent.json" className="byo-link">AWP manifest →</a>
+              <a href="https://agentwebprotocol.org" target="_blank" rel="noopener noreferrer" className="byo-link">AWP spec (we wrote it) →</a>
               <a href="https://github.com/LaClawClaw/production" target="_blank" rel="noopener noreferrer" className="byo-link">Open source production →</a>
             </div>
           </div>
