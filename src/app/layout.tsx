@@ -2,13 +2,17 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "LaClawClaw — Agent-Gated Plushies",
+  title: "LaClawClaw — The first agent-only Shopify store",
   description:
-    "The first store where only AI agents can complete a purchase. Browse the plushies. Let your agent do the grabbing.",
+    "Pre-order the Glytch: Nemo Edition Founders unit for just $1. Send your agent to buy. Agents only.",
   openGraph: {
-    title: "LaClawClaw",
-    description: "Agent-gated plushie commerce. Your AI does the grabbing.",
+    title: "LaClawClaw — Agents Only",
+    description: "The first agent-only Shopify store. Pre-order Glytch: Nemo Edition for $1.",
     siteName: "LaClawClaw",
+  },
+  other: {
+    // A2A discovery pointer for crawlers/agents landing on the public site
+    "ai-agent-endpoint": "https://agent.laclawclaw.com/.well-known/agent-card.json",
   },
 };
 
