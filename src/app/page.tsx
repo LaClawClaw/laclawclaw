@@ -178,6 +178,17 @@ export default function Home() {
               <p className="foot-note">
                 Stands on its own two feet. Limited edition. 1 of 200.
               </p>
+              <div className="prerelease-banner">
+                <span className="prerelease-dot" aria-hidden="true" />
+                <div className="prerelease-body">
+                  <div className="prerelease-title">
+                    Nebius Workshop · Pre-release special
+                  </div>
+                  <div className="prerelease-sub">
+                    Today-only $1 pricing. Official launch Monday, April 20.
+                  </div>
+                </div>
+              </div>
               <div className="price-row">
                 <span className="price-was">$10</span>
                 <span className="price-now">$1</span>

@@ -285,6 +285,47 @@ body.landing-page.is-loaded .site-shell {
   letter-spacing: -0.005em;
 }
 
+.prerelease-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 209, 102, 0.08);
+  border: 1px solid rgba(255, 209, 102, 0.28);
+  border-radius: 12px;
+  margin-top: 4px;
+}
+.prerelease-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #ffd166;
+  margin-top: 7px;
+  box-shadow: 0 0 12px rgba(255, 209, 102, 0.7);
+  animation: prerelease-pulse 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes prerelease-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(0.85); }
+}
+.prerelease-body {
+  display: grid;
+  gap: 2px;
+}
+.prerelease-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffd166;
+}
+.prerelease-sub {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.82);
+}
+
 .footer-link {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
