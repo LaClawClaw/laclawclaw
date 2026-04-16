@@ -187,6 +187,37 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="production-section">
+          <div className="production-shell">
+            <div className="production-head">
+              <div className="offer-kicker">Production spec · 0 → 1</div>
+              <h2>9 component groups. 2 injection molds. One claw.</h2>
+              <p>
+                Every part, every material, every sourcing decision — mapped.
+                Currently in production at our factory in Zhongshan, China.
+                Target shipment: Q3 2026.
+              </p>
+            </div>
+
+            <div className="production-diagram">
+              <img
+                src="/products/laclawclaw_7in_parts_breakdown_1.svg"
+                alt="7-inch Glytch: Nemo Edition parts breakdown — exploded view with 9 component groups"
+              />
+            </div>
+
+            <div className="production-cta">
+              <a href="/build" className="landing-button secondary">
+                Follow the build →
+              </a>
+              <p className="offer-disclaimer">
+                Live updates from the factory floor. New stage, new drop, new
+                detail — every step from 0 to 1.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <footer className="site-footer">
           <div className="footer-partners">
             <span className="partners-label">Launch partners</span>

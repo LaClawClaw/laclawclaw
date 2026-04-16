@@ -5,3 +5,6 @@ node_modules/
 *.log
 .DS_Store
 .vercel
+
+# Override global ignore — src/app/build is a Next.js route, not a build output
+!src/app/build/

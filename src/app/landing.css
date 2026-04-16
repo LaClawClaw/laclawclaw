@@ -298,6 +298,66 @@ body.landing-page.is-loaded .site-shell {
   color: rgba(255, 255, 255, 0.3);
 }
 
+.production-section {
+  padding: 96px 32px;
+  background: linear-gradient(180deg, rgba(10, 13, 18, 1) 0%, rgba(6, 7, 10, 1) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.production-shell {
+  width: min(100%, 860px);
+  margin: 0 auto;
+  display: grid;
+  gap: 40px;
+}
+
+.production-head {
+  display: grid;
+  gap: 14px;
+  text-align: center;
+  justify-items: center;
+}
+
+.production-head h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  max-width: 760px;
+}
+
+.production-head p {
+  max-width: 640px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  line-height: 1.55;
+}
+
+.production-diagram {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+}
+
+.production-diagram img {
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  display: block;
+}
+
+.production-cta {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  text-align: center;
+}
+
 .footer-partners {
   width: min(100%, 1200px);
   margin: 0 auto 16px;
