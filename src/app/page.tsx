@@ -1,7 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { PhotoGallery } from "@/components/photo-gallery";
 import "./landing.css";
+
+const GLYTCH_PHOTOS = [
+  { src: "/products/glytch-nemo-front.jpg",    alt: "Glytch: Nemo Edition — front",    label: "Front"    },
+  { src: "/products/glytch-nemo-side.jpg",     alt: "Glytch: Nemo Edition — side",     label: "Side"     },
+  { src: "/products/glytch-nemo-back.jpg",     alt: "Glytch: Nemo Edition — back",     label: "Back"     },
+  { src: "/products/glytch-nemo-carapace.jpg", alt: "Glytch: Nemo Edition — carapace", label: "Carapace" },
+];
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -207,6 +215,12 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <PhotoGallery
+          kicker="Production photography · Glytch: Nemo Edition"
+          heading="Four angles. Click to inspect."
+          photos={GLYTCH_PHOTOS}
+        />
 
         <section className="production-section">
           <div className="production-shell">
