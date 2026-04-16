@@ -12,6 +12,7 @@ type Entry = {
   title: string;
   body: string;
   asset?: { src: string; alt: string };
+  pdf?: { href: string; label: string };
   draft?: boolean;
 };
 
@@ -20,12 +21,16 @@ const ENTRIES: Entry[] = [
   {
     date: "2026-04-16",
     label: "Spec",
-    title: "Parts breakdown — 9 component groups",
+    title: "Parts breakdown + first 2D spec drawing delivered",
     body:
-      "The full exploded view for the 7-inch Glytch: Nemo Edition is locked. Two injection molds (scalp cap + face plate, PVC). Four sourced components (D-pad eyes in ABS, antennae, keychain ring, dog tag chain). Three soft goods (plush body with iron-wire armature, PU leather claws, clothing + shoes). Parting line hidden at the equator, under the fur collar. Tongue-and-groove fit between scalp cap and face plate.",
+      "The full exploded view for the 7-inch Glytch: Nemo Edition is locked. Two injection molds (scalp cap + face plate, PVC). Four sourced components (D-pad eyes in ABS, antennae, keychain ring, dog tag chain). Three soft goods (plush body with iron-wire armature, PU leather claws, clothing + shoes). Parting line hidden at the equator, under the fur collar. Tongue-and-groove fit between scalp cap and face plate. First 2D spec drawing with dimensional callouts shipped to the factory today — download link below.",
     asset: {
       src: "/products/laclawclaw_7in_parts_breakdown_1.svg",
       alt: "7-inch Glytch: Nemo Edition parts breakdown",
+    },
+    pdf: {
+      href: "/products/LCC-GLTCH-001-spec-drawing.pdf",
+      label: "LCC-GLTCH-001-spec-drawing.pdf (990 KB)",
     },
   },
   {
@@ -258,6 +263,27 @@ export default function BuildLog() {
           margin: 0 auto;
         }
 
+        .entry-pdf-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 14px;
+          padding: 10px 14px;
+          background: rgba(155, 231, 201, 0.05);
+          border: 1px solid rgba(155, 231, 201, 0.3);
+          border-radius: 8px;
+          color: #9be7c9;
+          text-decoration: none;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 0.88rem;
+          font-weight: 500;
+          transition: background 180ms, border-color 180ms;
+        }
+        .entry-pdf-link:hover {
+          background: rgba(155, 231, 201, 0.1);
+          border-color: rgba(155, 231, 201, 0.5);
+        }
+
         .back-home-bottom {
           margin-top: 8px;
         }
@@ -320,6 +346,16 @@ export default function BuildLog() {
               <div className="entry-asset">
                 <img src={e.asset.src} alt={e.asset.alt} />
               </div>
+            )}
+            {e.pdf && (
+              <a
+                href={e.pdf.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="entry-pdf-link"
+              >
+                📄 {e.pdf.label} →
+              </a>
             )}
           </article>
         ))}

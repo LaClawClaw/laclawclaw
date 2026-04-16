@@ -274,6 +274,14 @@ export default function Home() {
                   Follow the build →
                 </a>
                 <a
+                  href="/products/LCC-GLTCH-001-spec-drawing.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="landing-button secondary"
+                >
+                  📄 Spec drawing (PDF)
+                </a>
+                <a
                   href="https://github.com/LaClawClaw/production"
                   target="_blank"
                   rel="noopener noreferrer"
