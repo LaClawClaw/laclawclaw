@@ -312,8 +312,6 @@ export default function Home() {
                   <a href="https://github.com/benikigai" target="_blank" rel="noopener noreferrer">github/benikigai</a>
                   <span className="founder-sep">·</span>
                   <a href="https://x.com/MrBenBear" target="_blank" rel="noopener noreferrer">x/MrBenBear</a>
-                  <span className="founder-sep">·</span>
-                  <a href="https://injester.com" target="_blank" rel="noopener noreferrer">injester.com</a>
                 </div>
               </div>
 
