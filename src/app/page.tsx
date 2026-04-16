@@ -11,6 +11,12 @@ const GLYTCH_PHOTOS = [
   { src: "/products/glytch-nemo-carapace.jpg", alt: "Glytch: Nemo Edition — carapace", label: "Carapace" },
 ];
 
+const GLYTCH_LIFESTYLE = [
+  { src: "/products/glytch-nemo-shelf.jpg", alt: "Glytch on a shelf",                   label: "Shelf" },
+  { src: "/products/glytch-nemo-desk.jpg",  alt: "Glytch on a programmer's desk",       label: "Desk"  },
+  { src: "/products/glytch-nemo-box.jpg",   alt: "Glytch with Founders Edition box",    label: "Box"   },
+];
+
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const heroRef = useRef<HTMLElement>(null);
@@ -220,6 +226,14 @@ export default function Home() {
           kicker="Production photography · Glytch: Nemo Edition"
           heading="Four angles. Click to inspect."
           photos={GLYTCH_PHOTOS}
+          columns={2}
+        />
+
+        <PhotoGallery
+          kicker="Deployed · Glytch in the wild"
+          heading="Shelf, desk, unboxed."
+          photos={GLYTCH_LIFESTYLE}
+          columns={3}
         />
 
         <section className="production-section">

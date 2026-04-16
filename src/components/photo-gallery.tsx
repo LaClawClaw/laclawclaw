@@ -12,10 +12,12 @@ export function PhotoGallery({
   photos,
   kicker,
   heading,
+  columns = 2,
 }: {
   photos: GalleryPhoto[];
   kicker?: string;
   heading?: string;
+  columns?: 2 | 3 | 4;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -85,10 +87,13 @@ export function PhotoGallery({
 
         .pg-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(${columns}, 1fr);
           gap: 18px;
         }
-        @media (max-width: 680px) {
+        @media (max-width: 920px) {
+          .pg-grid { grid-template-columns: repeat(${Math.min(columns, 2)}, 1fr); }
+        }
+        @media (max-width: 560px) {
           .pg-grid { grid-template-columns: 1fr; }
         }
 
