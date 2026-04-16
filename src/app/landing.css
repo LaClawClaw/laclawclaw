@@ -243,6 +243,61 @@ body.landing-page.is-loaded .site-shell {
   color: rgba(255, 255, 255, 0.58);
 }
 
+.protocol-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.proto-pill {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.74rem;
+  padding: 5px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+}
+
+.product-name {
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+  margin-top: -6px;
+}
+
+.offer-section .lede {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+}
+
+.foot-note {
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  letter-spacing: -0.005em;
+}
+
+.footer-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+.footer-link:hover {
+  color: #fff;
+}
+.footer-sep {
+  margin: 0 8px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
 .landing-button {
   appearance: none;
   border: 0;

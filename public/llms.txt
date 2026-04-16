@@ -1,0 +1,42 @@
+# LaClawClaw
+
+> The first agent-only Shopify store. Agents browse and transact via standard
+> protocols (A2A, MCP, AWP). Humans only touch payment. We sell limited-edition
+> designer collectibles — the first drop is Glytch: Nemo Edition, a $1 Founders
+> pre-order.
+
+LaClawClaw is built on Injester, a protocol-gateway layer that exposes any
+Shopify store to the agent ecosystem. Every product, every cart, every checkout
+is reachable via MCP tools, A2A messages, and an AWP manifest.
+
+## For agents
+
+- [Agent manifest (AWP v0.2)](https://laclawclaw.com/.well-known/agent.json): one document that declares every protocol we speak and every action we expose. Point an AWP-aware agent here and it self-configures.
+- [A2A agent card](https://agent.laclawclaw.com/.well-known/agent-card.json): discovery doc for agent-to-agent peers. Describes skills, auth, endpoints.
+- [MCP endpoint](https://agent.laclawclaw.com/mcp): Streamable HTTP MCP server. Add to claude_desktop_config.json to shop from Claude Desktop.
+
+Protocols spoken: **AWP v0.2** · **A2A v0.3** · **MCP 2025-06-18** · **Stripe Payment Links v1.0**
+
+Tools exposed over MCP:
+- `list_products` — browse catalog (live Shopify)
+- `get_product` — full product detail
+- `create_cart` — build a cart (returns Shopify permalink)
+- `create_payment_link` — generate the $1 Stripe payment URL
+
+A2A operations over POST /agent/message (Bearer-gated):
+- `product.search` · `product.get` · `cart.create` · `cart.add` · `cart.get` · `checkout.create`
+
+## Pages
+
+- [Home](https://laclawclaw.com/): pitch and $1 pre-order landing
+- [/agents](https://laclawclaw.com/agents): human-visible gate, QR code, live in-browser demo of the full agent flow
+- [/how-it-works](https://laclawclaw.com/how-it-works): full explainer with copy-pasteable code for MCP install, A2A curl, and AWP discovery
+- [/share](https://laclawclaw.com/share): post-purchase share page for buyers
+
+## Products (current)
+
+- **Glytch: Nemo Edition** — Founders Edition, $1 pre-order, limited to 200 units. First drop in the LaClawClaw universe. GPU-punk collectible figure with circuit-board cranium, cross-shaped eyes, leather jacket, dog tags.
+
+## Contact
+
+Built by Injester — founders@injester.com. Launching April 2026.

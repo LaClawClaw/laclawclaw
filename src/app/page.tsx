@@ -111,15 +111,23 @@ export default function Home() {
 
           <div className="landing-content">
             <div className="eyebrow">Introducing LaClawClaw</div>
-            <h1>The agents have landed</h1>
+            <h1>The agents have landed.</h1>
             <p>
-              The first agent only Shopify store. Send your agent to pre-order your OpenClaw
-              inspired limited edition collectible today.
+              The first agent-only store. No cart. No checkout. Just agents.
+            </p>
+            <p>
+              Send your AI agent to claim a limited-edition collectible from the
+              open-source claw universe — only machines transact here.
             </p>
             <div className="landing-actions">
               <a className="landing-button secondary" href="/agents">
-                Buy Now at our Agent-Only Store
+                Enter the Agent-Only Store →
               </a>
+            </div>
+            <div className="protocol-badges" aria-label="Protocols we speak">
+              <span className="proto-pill">A2A</span>
+              <span className="proto-pill">MCP</span>
+              <span className="proto-pill">Stripe</span>
             </div>
             <div className="agents-only">Powered by Injester</div>
           </div>
@@ -133,30 +141,47 @@ export default function Home() {
         <section className="offer-section">
           <div className="offer-shell">
             <div className="offer-copy">
-              <div className="offer-kicker">Limited pre-order</div>
-              <h2>Reserve your founders edition unit for just $1.</h2>
+              <div className="offer-kicker">Limited Pre-Order — Founders Edition</div>
+              <h2>Reserve your unit for just $1.</h2>
+              <div className="product-name">Glytch: Nemo Edition</div>
+              <p className="lede">
+                The glitch in the machine. GPU-punk. Corporate insurgent with a permanent grin.
+              </p>
               <p>
-                Glytch: Nemo Edition. The glitch in the machine. GPU-punk, corporate insurgent
-                with a grin. Glytch: Nemo Edition is the first drop in the LaClawClaw universe:
-                a designer collectible figure with circuit-board cranium, cross-shaped eyes,
-                leather jacket, and dog tags. Standing at 8 inches tall, every detail from the
-                PCB trace engravings to the green fur collar is crafted with intention.
-                Limited edition 1/200.
+                Glytch is the first drop in the LaClawClaw universe — a designer
+                collectible born from the open-source claw community, currently
+                in production in Zhongshan, China. Armored crustacean frame.
+                Circuit-board cranium with PCB trace engravings. Cross-shaped
+                eyes recessed into a hardshell face plate. Signature black
+                leather jacket — the kind that ships trillion-parameter futures
+                from a keynote stage. Dog tags stamped with model weights.
+                Reactor-green fur collar, the same shade that powers every
+                datacenter on earth.
+              </p>
+              <p>
+                Every detail is a nod to the GPU era that made agents possible.
+              </p>
+              <p className="foot-note">
+                Stands on its own two feet. Limited edition. 1 of 200.
               </p>
               <div className="price-row">
-                <span className="price-now">$1</span>
                 <span className="price-was">$10</span>
+                <span className="price-now">$1</span>
               </div>
               <a className="landing-button primary" href="/agents">
-                Pre-order now
+                Pre-order now →
               </a>
-              <p className="offer-note">Full price $59.99. Ships Q3 2026.</p>
-              <p className="offer-disclaimer">Product appearance may vary from the preview shown.</p>
+              <p className="offer-note">
+                Full price $59.99. Currently in production — target shipment Q3 2026.
+              </p>
+              <p className="offer-disclaimer">
+                Product appearance may vary from preview shown.
+              </p>
             </div>
 
             <div className="offer-visual">
               <div className="product-card-landing">
-                <img src="/lcc.gif" alt="Pre-order product preview" />
+                <img src="/lcc.gif" alt="Glytch: Nemo Edition — pre-order preview" />
               </div>
             </div>
           </div>
@@ -164,10 +189,43 @@ export default function Home() {
 
         <footer className="site-footer">
           <div className="footer-inner">
-            <span>© 2026 Injester</span>
-            <span>Agents only. All rights reserved.</span>
+            <span>© 2026 Injester · Agents only. All rights reserved.</span>
+            <span>
+              <a href="/how-it-works" className="footer-link">How it works</a>
+              <span className="footer-sep">·</span>
+              <a href="/.well-known/agent.json" className="footer-link">Agent manifest</a>
+            </span>
           </div>
         </footer>
+
+        {/* Schema.org Product for AI crawlers + SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Product",
+              name: "Glytch: Nemo Edition — Founders Pre-order",
+              description:
+                "GPU-punk designer collectible. First drop in the LaClawClaw universe. Limited 1/200. Agent-only purchase.",
+              image: "https://laclawclaw.com/products/glytch-nemo-front.jpg",
+              brand: { "@type": "Brand", name: "LaClawClaw" },
+              sku: "LCC-FIG-001-FOUNDERS",
+              offers: {
+                "@type": "Offer",
+                price: "1.00",
+                priceCurrency: "USD",
+                availability: "https://schema.org/PreOrder",
+                url: "https://laclawclaw.com/agents",
+              },
+              potentialAction: {
+                "@type": "BuyAction",
+                target: "https://agent.laclawclaw.com/mcp",
+                actionPlatform: ["mcp", "a2a"],
+              },
+            }),
+          }}
+        />
       </div>
     </>
   );

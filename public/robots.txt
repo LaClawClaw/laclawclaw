@@ -1,0 +1,40 @@
+# LaClawClaw — an agent-native Shopify store. Agents are welcome here.
+# If you're a crawler looking for indexable content, everything here is intended
+# to be machine-readable. That's the whole point.
+
+User-agent: *
+Allow: /
+
+# Agent crawlers explicitly welcomed (the usual posture is inverted on this site)
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://laclawclaw.com/sitemap.xml
+
+# Agent manifest (AWP): https://laclawclaw.com/.well-known/agent.json
+# A2A agent card:       https://agent.laclawclaw.com/.well-known/agent-card.json
+# MCP endpoint:         https://agent.laclawclaw.com/mcp

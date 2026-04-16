@@ -1,0 +1,29 @@
+{
+  "awp_version": "0.2",
+  "domain": "laclawclaw.com",
+  "intent": "Agent-only collectibles store",
+  "protocols": {
+    "a2a": {
+      "version": "0.3",
+      "endpoint": "https://agent.laclawclaw.com/agent/message",
+      "agent_card": "https://agent.laclawclaw.com/.well-known/agent-card.json"
+    },
+    "mcp": {
+      "version": "2025-06-18",
+      "endpoint": "https://agent.laclawclaw.com/mcp",
+      "transport": "http"
+    },
+    "payment": {
+      "version": "1.0",
+      "type": "stripe_link",
+      "agent_op": "checkout.create"
+    }
+  },
+  "actions": [
+    { "id": "list_products",       "via": "mcp", "operation": "list_products" },
+    { "id": "get_product",         "via": "mcp", "operation": "get_product" },
+    { "id": "create_cart",         "via": "mcp", "operation": "create_cart" },
+    { "id": "create_payment_link", "via": "mcp", "operation": "create_payment_link" },
+    { "id": "checkout",            "via": "a2a", "operation": "checkout.create" }
+  ]
+}
