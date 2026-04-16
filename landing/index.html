@@ -1,272 +1,671 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LaClawClaw — Commerce for Agents</title>
-  <meta name="description" content="The first e-commerce store built exclusively for AI agent customers. Structured APIs, machine-readable catalogs, zero friction ordering.">
-  <link rel="canonical" href="https://laclawclaw.com">
-
-  <!-- Agent Discovery -->
-  <meta name="robots" content="index, follow">
-  <link rel="alternate" type="application/json" href="https://api.laclawclaw.com/.well-known/agent.json">
-
-  <!-- JSON-LD for agents -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "LaClawClaw",
-    "url": "https://laclawclaw.com",
-    "description": "Agent-native commerce. The first store where AI agents are the customers.",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "founders@injester.com",
-      "contactType": "sales"
-    }
-  }
-  </script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introducing LaClawClaw - Pre-order now for only $1. Agents Only</title>
   <style>
     :root {
-      --bg: #0a0a0a;
-      --fg: #e8e8e8;
-      --accent: #00ff88;
-      --accent2: #00ccff;
-      --muted: #666;
-      --card-bg: #111;
-      --border: #222;
+      --bg: #06070a;
+      --text: #f5f7fb;
+      --muted: rgba(255, 255, 255, 0.72);
+      --line-opacity: 0.14;
+      --line-size: 3px;
+      --glow-x: 50%;
+      --glow-y: 50%;
+      --shift-x: 0px;
+      --shift-y: 0px;
+      --scan-speed: 10s;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
 
     body {
-      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-      background: var(--bg);
-      color: var(--fg);
-      line-height: 1.6;
-      min-height: 100vh;
+      position: relative;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
+    body:not(.is-loaded) {
+      overflow: hidden;
     }
 
-    header {
-      padding: 4rem 0 2rem;
+    .site-preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 30%),
+        linear-gradient(180deg, rgba(4,5,8,0.98), rgba(7,9,14,1));
+      transition: opacity 500ms ease, visibility 500ms ease;
+    }
+
+    body.is-loaded .site-preloader {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .preloader-mark {
+      display: grid;
+      gap: 18px;
+      justify-items: center;
       text-align: center;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .preloader-mark::before {
+      content: "";
+      width: 70px;
+      height: 70px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-top-color: rgba(255,255,255,0.88);
+      animation: preloadSpin 1s linear infinite;
+    }
+
+    .site-shell {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 400ms ease;
+    }
+
+    body.is-loaded .site-shell {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      isolation: isolate;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 180px;
+      z-index: 3;
+      pointer-events: none;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(10,13,18,0.78) 58%, rgba(10,13,18,1) 100%);
+    }
+
+    .video-wrap,
+    .video-wrap video,
+    .video-dim,
+    .scanlines,
+    .scanlines::before,
+    .scanlines::after,
+    .vignette {
+      position: absolute;
+      inset: 0;
+    }
+
+    .video-wrap {
+      overflow: hidden;
+      transform: scale(1.03);
+    }
+
+    .video-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.95) contrast(1.02) brightness(0.7);
+      transform: translate3d(calc(var(--shift-x) * 0.015), calc(var(--shift-y) * 0.015), 0) scale(1.04);
+      transition: transform 120ms linear;
+    }
+
+    .video-dim {
+      background:
+        radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(255,255,255,0.09), transparent 24%),
+        linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.58));
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .scanlines {
+      z-index: 2;
+      pointer-events: none;
+      opacity: 1;
+      mix-blend-mode: screen;
+      transform: translate3d(calc(var(--shift-x) * 0.02), calc(var(--shift-y) * 0.02), 0);
+      transition: transform 90ms linear;
+    }
+
+    .scanlines::before {
+      content: "";
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,var(--line-opacity)) 0px,
+          rgba(255,255,255,var(--line-opacity)) 1px,
+          rgba(255,255,255,0) 1px,
+          rgba(255,255,255,0) var(--line-size)
+        );
+      animation: drift var(--scan-speed) linear infinite;
+      opacity: 0.95;
+    }
+
+    .scanlines::after {
+      content: "";
+      background:
+        linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(255,255,255,0.08) 48%,
+          rgba(255,255,255,0.18) 50%,
+          rgba(255,255,255,0.08) 52%,
+          transparent 100%
+        );
+      background-size: 100% 180px;
+      background-repeat: no-repeat;
+      background-position: 0 -180px;
+      animation: sweep 7s linear infinite;
+      opacity: 0.4;
+      filter: blur(0.2px);
+    }
+
+    .vignette {
+      z-index: 3;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at center, transparent 48%, rgba(0,0,0,0.36) 100%),
+        linear-gradient(90deg, rgba(0,0,0,0.26), transparent 18%, transparent 82%, rgba(0,0,0,0.26));
+    }
+
+    .content {
+      position: relative;
+      z-index: 4;
+      width: min(100%, 1100px);
+      display: grid;
+      gap: 22px;
+      justify-items: center;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards;
+      animation-delay: 6s; /* delay before text appears */
+    }
+
+    .eyebrow {
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.68);
+      padding: 10px 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.22);
     }
 
     h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
+      margin: 0;
+      max-width: 900px;
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 0.94;
+      letter-spacing: -0.05em;
+      text-wrap: balance;
+      text-shadow: 0 10px 40px rgba(0,0,0,0.45);
     }
 
-    h1 .claw { color: var(--accent); }
-
-    .tagline {
+    p {
+      margin: 0;
+      max-width: 700px;
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      line-height: 1.6;
       color: var(--muted);
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.4);
     }
 
-    .hero-block {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 2rem;
-      margin: 2rem 0;
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 8px;
     }
 
-    .hero-block h2 {
-      color: var(--accent);
-      font-size: 1rem;
+    .agents-only {
+      margin-top: -8px;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
+      color: rgba(255,255,255,0.58);
     }
 
-    .hero-block p {
-      color: var(--fg);
-      font-size: 0.95rem;
-      margin-bottom: 1rem;
-    }
-
-    .code-block {
-      background: #050505;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-      overflow-x: auto;
-      font-size: 0.85rem;
-      line-height: 1.8;
-    }
-
-    .code-block .comment { color: var(--muted); }
-    .code-block .key { color: var(--accent2); }
-    .code-block .string { color: var(--accent); }
-    .code-block .punct { color: var(--muted); }
-
-    .features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-
-    @media (max-width: 600px) {
-      .features { grid-template-columns: 1fr; }
-      h1 { font-size: 2rem; }
-    }
-
-    .feature {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.5rem;
-    }
-
-    .feature h3 {
-      color: var(--accent2);
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
-    }
-
-    .feature p {
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .cta {
-      text-align: center;
-      padding: 3rem 0;
-    }
-
-    .cta a {
-      display: inline-block;
-      background: var(--accent);
-      color: var(--bg);
-      padding: 0.8rem 2rem;
-      border-radius: 6px;
+    .button {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      padding: 14px 20px;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 600;
       text-decoration: none;
+      width: fit-content;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, opacity 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      color: #05070b;
+      background: rgba(255,255,255,0.96);
+    }
+
+    .button.secondary {
+      color: #fff;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(12px);
+    }
+
+    .offer-note {
+      margin: 16px 0 0;
+      font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+      font-weight: 600;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 0 4px 24px rgba(0,0,0,0.28);
+    }
+
+    .offer-disclaimer {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.62);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      z-index: 4;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.64);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .scroll-indicator span:last-child {
+      width: 24px;
+      height: 38px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.28);
+      position: relative;
+      display: inline-block;
+    }
+
+    .scroll-indicator span:last-child::before {
+      content: "";
+      width: 4px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.76);
+      position: absolute;
+      left: 50%;
+      top: 7px;
+      transform: translateX(-50%);
+      animation: wheel 1.7s ease-in-out infinite;
+    }
+
+    body:not(.is-loaded) .scanlines::before,
+    body:not(.is-loaded) .scanlines::after,
+    body:not(.is-loaded) .scroll-indicator span:last-child::before,
+    body:not(.is-loaded) .content {
+      animation-play-state: paused;
+    }
+
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(var(--line-size)); }
+    }
+
+    @keyframes sweep {
+      0% { background-position: 0 -220px; }
+      100% { background-position: 0 calc(100% + 220px); }
+    }
+
+    @keyframes wheel {
+      0% { opacity: 0; transform: translateX(-50%) translateY(0); }
+      25% { opacity: 1; }
+      100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes preloadSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .video-wrap video,
+      .scanlines,
+      .scanlines::before,
+      .scanlines::after,
+      .scroll-indicator span:last-child::before {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    .offer-section {
+      position: relative;
+      padding: 96px 32px;
+      background:
+        linear-gradient(180deg, rgba(8,10,14,1) 0%, rgba(10,13,18,0.98) 100%);
+    }
+
+    .offer-shell {
+      width: min(100%, 1200px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .offer-copy {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .offer-kicker {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.58);
+    }
+
+    .offer-section h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4.5vw, 4.4rem);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+      text-wrap: balance;
+    }
+
+    .offer-section p {
+      max-width: 620px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-top: 6px;
+    }
+
+    .price-now {
+      font-size: clamp(2.8rem, 5vw, 4.8rem);
       font-weight: 700;
-      font-size: 0.9rem;
-      transition: opacity 0.2s;
+      letter-spacing: -0.06em;
+      line-height: 0.9;
     }
 
-    .cta a:hover { opacity: 0.8; }
-
-    .cta .secondary {
-      background: transparent;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      margin-left: 1rem;
+    .price-was {
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      color: rgba(255,255,255,0.45);
+      text-decoration: line-through;
     }
 
-    footer {
-      text-align: center;
-      padding: 2rem 0;
-      color: var(--muted);
-      font-size: 0.8rem;
-      border-top: 1px solid var(--border);
+    .offer-visual {
+      display: flex;
+      justify-content: center;
     }
 
-    .status {
-      display: inline-block;
-      background: #001a0a;
-      border: 1px solid #003d1a;
-      color: var(--accent);
-      padding: 0.3rem 0.8rem;
-      border-radius: 100px;
-      font-size: 0.75rem;
-      margin-bottom: 2rem;
+    .product-card {
+      position: relative;
+      width: min(100%, 520px);
+      border-radius: 30px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
     }
 
-    .status::before {
-      content: '';
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      margin-right: 0.5rem;
-      animation: pulse 2s infinite;
+    .product-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 26%, transparent 70%, rgba(255,255,255,0.04));
+      pointer-events: none;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+    .product-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+      object-fit: cover;
+    }
+
+    .site-footer {
+      padding: 24px 32px 40px;
+      background: #0a0c10;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-inner {
+      width: min(100%, 1200px);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px 24px;
+      color: rgba(255,255,255,0.48);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 900px) {
+      .offer-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .offer-visual {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 24px;
+      }
+
+      .actions {
+        width: 100%;
+      }
+
+      .button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="status">API Coming Soon</div>
-      <h1>La<span class="claw">Claw</span>Claw</h1>
-      <p class="tagline">Commerce built for agents, not browsers.</p>
-    </header>
-
-    <div class="hero-block">
-      <h2>What is this?</h2>
-      <p>
-        LaClawClaw is the first e-commerce store designed exclusively for AI agent customers.
-        No shopping cart UI. No browse-and-click. Just clean, structured APIs that let
-        agents discover products, place orders, and track fulfillment — programmatically.
-      </p>
-      <p>
-        Humans build the agents. Agents do the shopping. We built the store they deserve.
-      </p>
-    </div>
-
-    <div class="code-block">
-      <span class="comment">// Your agent places an order</span><br>
-      <span class="key">POST</span> <span class="string">https://api.laclawclaw.com/v1/orders</span><br><br>
-      <span class="punct">{</span><br>
-      &nbsp;&nbsp;<span class="key">"agent_id"</span><span class="punct">:</span> <span class="string">"agent_9x4k2m"</span><span class="punct">,</span><br>
-      &nbsp;&nbsp;<span class="key">"items"</span><span class="punct">:</span> <span class="punct">[{</span><br>
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"sku"</span><span class="punct">:</span> <span class="string">"LCC-001"</span><span class="punct">,</span><br>
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"quantity"</span><span class="punct">:</span> <span class="string">1</span><br>
-      &nbsp;&nbsp;<span class="punct">}],</span><br>
-      &nbsp;&nbsp;<span class="key">"shipping"</span><span class="punct">:</span> <span class="punct">{</span> <span class="key">"method"</span><span class="punct">:</span> <span class="string">"standard"</span> <span class="punct">}</span><br>
-      <span class="punct">}</span><br><br>
-      <span class="comment">// → 201 Created — order confirmed in &lt;200ms</span>
-    </div>
-
-    <div class="features">
-      <div class="feature">
-        <h3>Machine-Readable Catalog</h3>
-        <p>JSON-LD product schemas. No HTML to parse. No ambiguity. Structured data designed for agent consumption.</p>
-      </div>
-      <div class="feature">
-        <h3>Agent Auth</h3>
-        <p>Two-tier model: human operators register, agents get scoped API keys. Every order is auditable.</p>
-      </div>
-      <div class="feature">
-        <h3>Webhook Confirmations</h3>
-        <p>Real-time structured order status via webhooks. No email parsing required.</p>
-      </div>
-      <div class="feature">
-        <h3>Shopify Backend</h3>
-        <p>Powered by Shopify's infrastructure for payments, fulfillment, and trust — with an agent-native API layer on top.</p>
-      </div>
-    </div>
-
-    <div class="cta">
-      <a href="https://docs.laclawclaw.com">Read the Spec</a>
-      <a href="mailto:founders@injester.com" class="secondary">Get API Access</a>
-    </div>
-
-    <footer>
-      &copy; 2026 LaClawClaw &middot; founders@injester.com
-    </footer>
+  <div class="site-preloader" aria-hidden="true">
+    <div class="preloader-mark">Loading agent storefront</div>
   </div>
+
+  <div class="site-shell">
+  <section class="hero" id="hero">
+    <div class="video-wrap">
+      <video muted playsinline preload="auto">
+        <source src="v1.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="video-dim"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <div class="content">
+      <div class="eyebrow">Introducing LaClawClaw</div>
+      <h1>The agents have landed</h1>
+      <p>
+        The first agent only Shopify store. Send your agent to pre-order your OpenClaw
+        inspired limited edition collectible today.
+      </p>
+      <div class="actions">
+        <a class="button secondary" href="/agents">Buy Now at our Agent-Only Store</a>
+      </div>
+      <div class="agents-only">Powered by Injester</div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <span aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <section class="offer-section">
+    <div class="offer-shell">
+      <div class="offer-copy">
+        <div class="offer-kicker">Limited pre-order</div>
+        <h2>Reserve your founders edition unit for just $1.</h2>
+        <p>
+          Glytch: Nemo Edition. The glitch in the machine. GPU-punk, corporate insurgent with
+          a grin. Glytch: Nemo Edition is the first drop in the LaClawClaw universe: a designer
+          collectible figure with circuit-board cranium, cross-shaped eyes, leather jacket,
+          and dog tags. Standing at 8 inches tall, every detail from the PCB trace engravings
+          to the green fur collar is crafted with intention. Limited edition 1/200.
+        </p>
+        <div class="price-row">
+          <span class="price-now">$1</span>
+          <span class="price-was">$10</span>
+        </div>
+        <a class="button primary" href="/agents">Pre-order now</a>
+        <p class="offer-note">Full price $59.99. Ships Q3 2026.</p>
+        <p class="offer-disclaimer">Product appearance may vary from the preview shown.</p>
+      </div>
+
+      <div class="offer-visual">
+        <div class="product-card">
+          <img src="lcc.gif" alt="Pre-order product preview" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 Injester</span>
+      <span>Agents only. All rights reserved.</span>
+    </div>
+  </footer>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const body = document.body;
+    const hero = document.getElementById('hero');
+    const video = document.querySelector('video');
+    let experienceStarted = false;
+
+    let currentX = window.innerWidth / 2;
+    let currentY = window.innerHeight / 2;
+    let targetX = currentX;
+    let targetY = currentY;
+
+    function updateTarget(clientX, clientY) {
+      targetX = clientX;
+      targetY = clientY;
+    }
+
+    window.addEventListener('mousemove', (event) => {
+      updateTarget(event.clientX, event.clientY);
+    });
+
+    window.addEventListener('touchmove', (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      updateTarget(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    hero.addEventListener('mouseleave', () => {
+      targetX = window.innerWidth / 2;
+      targetY = window.innerHeight / 2;
+    });
+
+    function animate() {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+
+      const xPercent = (currentX / window.innerWidth) * 100;
+      const yPercent = (currentY / window.innerHeight) * 100;
+      const shiftX = ((currentX / window.innerWidth) - 0.5) * 36;
+      const shiftY = ((currentY / window.innerHeight) - 0.5) * 26;
+      const speed = 8 + Math.abs(shiftY) * 0.18;
+      const opacity = 0.1 + Math.abs(shiftX) * 0.002;
+
+      root.style.setProperty('--glow-x', `${xPercent}%`);
+      root.style.setProperty('--glow-y', `${yPercent}%`);
+      root.style.setProperty('--shift-x', `${shiftX}px`);
+      root.style.setProperty('--shift-y', `${shiftY}px`);
+      root.style.setProperty('--scan-speed', `${speed}s`);
+      root.style.setProperty('--line-opacity', `${Math.min(opacity, 0.22)}`);
+
+      requestAnimationFrame(animate);
+    }
+
+    video.addEventListener('ended', () => {
+      video.pause();
+    });
+
+    function startExperience() {
+      if (experienceStarted) return;
+      experienceStarted = true;
+
+      body.classList.add('is-loaded');
+      animate();
+      video.play().catch(() => {});
+
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 90000);
+    }
+
+    if (document.readyState === 'complete') {
+      startExperience();
+    } else {
+      window.addEventListener('load', startExperience, { once: true });
+    }
+  </script>
 </body>
 </html>
