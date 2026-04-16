@@ -188,6 +188,18 @@ export default function Home() {
         </section>
 
         <footer className="site-footer">
+          <div className="footer-partners">
+            <span className="partners-label">Launch partners</span>
+            <a href="https://nebius.com" target="_blank" rel="noopener noreferrer" className="partner-link">Nebius</a>
+            <span className="footer-sep">·</span>
+            <a href="https://tavily.com" target="_blank" rel="noopener noreferrer" className="partner-link">Tavily</a>
+            <span className="footer-sep">·</span>
+            <a href="https://anthropic.com" target="_blank" rel="noopener noreferrer" className="partner-link">Anthropic</a>
+            <span className="footer-sep">·</span>
+            <a href="https://stripe.com" target="_blank" rel="noopener noreferrer" className="partner-link">Stripe</a>
+            <span className="footer-sep">·</span>
+            <a href="https://shopify.com" target="_blank" rel="noopener noreferrer" className="partner-link">Shopify</a>
+          </div>
           <div className="footer-inner">
             <span>© 2026 Injester · Agents only. All rights reserved.</span>
             <span>

@@ -298,6 +298,35 @@ body.landing-page.is-loaded .site-shell {
   color: rgba(255, 255, 255, 0.3);
 }
 
+.footer-partners {
+  width: min(100%, 1200px);
+  margin: 0 auto 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.48);
+}
+.partners-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  margin-right: 8px;
+}
+.partner-link {
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 180ms ease;
+}
+.partner-link:hover {
+  color: #ffd166;
+}
+
 .landing-button {
   appearance: none;
   border: 0;

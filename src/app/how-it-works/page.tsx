@@ -239,6 +239,82 @@ export default function HowItWorks() {
         }
         .footer-credit a { color: #9be7c9; text-decoration: none; }
         .footer-credit a:hover { text-decoration: underline; }
+
+        .partner-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 18px;
+          margin-top: 8px;
+        }
+        @media (max-width: 760px) {
+          .partner-grid { grid-template-columns: 1fr; }
+        }
+        .partner-card {
+          padding: 22px;
+          border-radius: 14px;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.08);
+          display: grid;
+          gap: 8px;
+        }
+        .partner-card.highlight {
+          border-color: rgba(255,209,102,0.28);
+          background: rgba(255,209,102,0.04);
+        }
+        .partner-name {
+          font-size: 1.4rem;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+        }
+        .partner-name a {
+          color: #ffd166;
+          text-decoration: none;
+        }
+        .partner-name a:hover { text-decoration: underline; }
+        .partner-role {
+          font-size: 0.78rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.55);
+        }
+        .partner-card p {
+          margin: 6px 0 0;
+          font-size: 0.96rem;
+          line-height: 1.55;
+          color: rgba(255,255,255,0.78);
+        }
+        .partner-card em {
+          color: rgba(255,255,255,0.92);
+          font-style: italic;
+        }
+
+        .stack-row { margin-top: 12px; }
+        .stack-title {
+          font-size: 0.76rem;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.48);
+          margin-bottom: 12px;
+        }
+        .stack-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: grid;
+          gap: 10px;
+          max-width: 820px;
+        }
+        .stack-list li {
+          font-size: 0.94rem;
+          line-height: 1.55;
+          color: rgba(255,255,255,0.75);
+        }
+        .stack-list a {
+          color: #9be7c9;
+          text-decoration: none;
+          font-weight: 600;
+        }
+        .stack-list a:hover { text-decoration: underline; }
       `}</style>
 
       <a href="/" className="back-home">← laclawclaw.com</a>
@@ -396,6 +472,54 @@ export default function HowItWorks() {
           >
             AWP manifest
           </a>
+        </div>
+      </section>
+
+      <section className="section">
+        <h2>Launch partners <span className="dim">— where the AI infrastructure lives</span></h2>
+
+        <div className="partner-grid">
+          <div className="partner-card highlight">
+            <div className="partner-name">
+              <a href="https://nebius.com" target="_blank" rel="noopener noreferrer">Nebius</a>
+            </div>
+            <div className="partner-role">GPU inference for OpenClaw</div>
+            <p>
+              OpenClaw — the store-side clerk that converses with visiting agents
+              in natural language — will run as a fine-tuned open-source model
+              on Nebius H100s. Small base (Llama 3.3 / Qwen 2.5), fine-tuned on
+              the LaClawClaw catalog, brand voice, and character lore. Prototype
+              validated; production fine-tune kicks off post-launch. Cheaper,
+              faster, and we own the weights.
+            </p>
+          </div>
+
+          <div className="partner-card highlight">
+            <div className="partner-name">
+              <a href="https://tavily.com" target="_blank" rel="noopener noreferrer">Tavily</a>
+            </div>
+            <div className="partner-role">Research layer inside OpenClaw</div>
+            <p>
+              When a visiting agent asks a question that leaves the catalog —
+              <em> &quot;what else is in the designer-collectible space?&quot;</em>,
+              <em> &quot;who&apos;s Jensen Huang and why is he on a jacket?&quot;</em>
+              — OpenClaw calls Tavily&apos;s AI-optimized search API and grounds
+              the answer before returning. Keeps the shopping flow intact while
+              letting agents satisfy their humans&apos; tangents.
+            </p>
+          </div>
+        </div>
+
+        <div className="stack-row">
+          <div className="stack-title">Rest of the stack</div>
+          <ul className="stack-list">
+            <li><a href="https://anthropic.com" target="_blank" rel="noopener noreferrer">Anthropic</a> — Claude Opus 4.6 backs the reasoning scaffold during dev; powers the live demo agent on /agents.</li>
+            <li><a href="https://shopify.com" target="_blank" rel="noopener noreferrer">Shopify</a> — inventory + fulfillment. Our MCP server proxies the Storefront API transparently.</li>
+            <li><a href="https://stripe.com" target="_blank" rel="noopener noreferrer">Stripe</a> — agent-generated, human-paid payment links. Gated on retrieval; PCI is Stripe&apos;s problem.</li>
+            <li><a href="https://vercel.com" target="_blank" rel="noopener noreferrer">Vercel</a> — hosts laclawclaw.com.</li>
+            <li><a href="https://railway.app" target="_blank" rel="noopener noreferrer">Railway</a> — hosts the jester gateway (A2A + ACP + MCP).</li>
+            <li><a href="https://cloudflare.com" target="_blank" rel="noopener noreferrer">Cloudflare</a> — DNS, SSL, proxy.</li>
+          </ul>
         </div>
       </section>
 
