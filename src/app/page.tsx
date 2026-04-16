@@ -180,34 +180,29 @@ export default function Home() {
             </div>
 
             <div className="offer-visual">
-              <div className="product-card-landing">
+              <div className="product-card-landing product-card-3d">
                 <model-viewer
                   src="/products/glytch-nemo-edition.glb"
                   alt="Glytch: Nemo Edition — rotatable 3D model"
                   poster="/lcc.gif"
                   loading="lazy"
-                  reveal="interaction"
+                  reveal="auto"
                   auto-rotate=""
-                  auto-rotate-delay="500"
+                  auto-rotate-delay="2000"
                   rotation-per-second="20deg"
                   camera-controls=""
-                  camera-orbit="30deg 75deg 3m"
+                  interaction-prompt="auto"
                   shadow-intensity="1"
-                  exposure="1"
+                  shadow-softness="1"
+                  exposure="1.1"
                   environment-image="neutral"
                   style={{
                     width: "100%",
                     height: "100%",
-                    minHeight: "420px",
                     display: "block",
                     background: "transparent",
                   }}
-                >
-                  <div slot="poster" className="model-poster">
-                    <img src="/lcc.gif" alt="Glytch: Nemo Edition preview" />
-                    <div className="model-poster-cta">▶ Click to spin</div>
-                  </div>
-                </model-viewer>
+                />
               </div>
             </div>
           </div>
