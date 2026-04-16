@@ -142,7 +142,20 @@ export default function AgentsGate() {
           font-size: clamp(1rem, 1.4vw, 1.2rem);
           line-height: 1.6;
           color: rgba(255,255,255,0.7);
-          max-width: 560px;
+          max-width: 620px;
+        }
+        .agents-hero p.agents-lede {
+          font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+          color: rgba(255,255,255,0.88);
+          font-weight: 500;
+        }
+        .agents-hero code {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 0.88em;
+          color: #9be7c9;
+          background: rgba(155,231,201,0.08);
+          padding: 2px 6px;
+          border-radius: 4px;
         }
         .endpoint-card {
           display: grid;
@@ -261,18 +274,119 @@ export default function AgentsGate() {
         @media (max-width: 720px) {
           .endpoint-card { grid-template-columns: 1fr; gap: 20px; justify-items: center; }
         }
+
+        .bring-your-own {
+          width: 100%;
+          max-width: 960px;
+          display: grid;
+          gap: 28px;
+        }
+        .byo-head { display: grid; gap: 10px; }
+        .byo-kicker {
+          font-size: 0.74rem;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: #9be7c9;
+        }
+        .bring-your-own h2 {
+          margin: 0;
+          font-size: clamp(1.6rem, 3vw, 2.4rem);
+          letter-spacing: -0.03em;
+          line-height: 1.1;
+        }
+        .bring-your-own > .byo-head p {
+          margin: 0;
+          color: rgba(255,255,255,0.7);
+          font-size: clamp(0.98rem, 1.3vw, 1.1rem);
+          line-height: 1.55;
+          max-width: 660px;
+        }
+        .byo-cards {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 18px;
+        }
+        @media (max-width: 720px) {
+          .byo-cards { grid-template-columns: 1fr; }
+        }
+        .byo-card {
+          padding: 24px;
+          border-radius: 14px;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.08);
+          display: grid;
+          gap: 10px;
+          align-content: start;
+        }
+        .byo-num {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 0.82rem;
+          color: rgba(255,255,255,0.4);
+          letter-spacing: 0.1em;
+        }
+        .byo-card h3 {
+          margin: 0;
+          font-size: 1.2rem;
+          letter-spacing: -0.02em;
+        }
+        .byo-card p {
+          margin: 0;
+          font-size: 0.95rem;
+          line-height: 1.55;
+          color: rgba(255,255,255,0.72);
+        }
+        .byo-card code {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 0.88em;
+          color: #9be7c9;
+          background: rgba(155,231,201,0.08);
+          padding: 1px 5px;
+          border-radius: 3px;
+        }
+        .byo-snippet {
+          margin: 6px 0 0;
+          background: #05070a;
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 8px;
+          padding: 14px 16px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 0.82rem;
+          line-height: 1.5;
+          color: rgba(255,255,255,0.88);
+          overflow-x: auto;
+        }
+        .byo-links {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          margin-top: 8px;
+        }
+        .byo-link {
+          color: #9be7c9;
+          text-decoration: none;
+          font-size: 0.92rem;
+          font-weight: 600;
+        }
+        .byo-link:hover { text-decoration: underline; }
       `}</style>
 
       <a href="/" className="back-home">← back to laclawclaw.com</a>
 
       <section className="agents-hero">
-        <span className="eyebrow-tag">Agents only</span>
-        <h1>Direct your agent here.</h1>
+        <span className="eyebrow-tag">Agents only · First agent-only Shopify commerce</span>
+        <h1>Point your OpenClaw agent here.</h1>
+        <p className="agents-lede">
+          You&apos;re looking at the first agent-only Shopify commerce
+          experience. No cart UI. No checkout form. No human flow.
+          Just protocol endpoints — A2A, MCP, AWP — for agents to
+          transact on behalf of their humans.
+        </p>
         <p>
-          This endpoint serves A2A &amp; ACP. Your agent discovers skills at{" "}
-          <code>/.well-known/agent-card.json</code> and transacts via{" "}
-          <code>POST /agent/message</code>. Humans land here by mistake — point
-          your agent, don&apos;t point yourself.
+          Your OpenClaw discovers our skills at{" "}
+          <code>/.well-known/agent-card.json</code>, transacts via{" "}
+          <code>POST /agent/message</code>, or connects as a Claude
+          Desktop MCP server at <code>/mcp</code>. Humans land here by
+          mistake — point your OpenClaw, don&apos;t point yourself.
         </p>
       </section>
 
@@ -292,7 +406,7 @@ export default function AgentsGate() {
 
       <section className="demo-section">
         <h2>
-          Don&apos;t have an agent? <span className="light">Watch ours do it live.</span>
+          Don&apos;t have OpenClaw yet? <span className="light">Watch a demo agent run it live.</span>
         </h2>
         <button
           className="demo-run-btn"
@@ -326,6 +440,53 @@ export default function AgentsGate() {
             Complete purchase — $1 →
           </a>
         )}
+      </section>
+
+      <section className="bring-your-own">
+        <div className="byo-head">
+          <span className="byo-kicker">Bring your own OpenClaw</span>
+          <h2>Two paths into the store.</h2>
+          <p>
+            OpenClaw is the open-source agent recipe for shopping at
+            agent-only stores. Bring any MCP- or A2A-capable agent and
+            it works — we call the canonical pattern OpenClaw.
+          </p>
+        </div>
+
+        <div className="byo-cards">
+          <div className="byo-card">
+            <div className="byo-num">01</div>
+            <h3>Claude Desktop</h3>
+            <p>
+              Drop this into your{" "}
+              <code>claude_desktop_config.json</code>, restart Claude,
+              and you&apos;re shopping. Zero setup beyond the one-line
+              config.
+            </p>
+            <pre className="byo-snippet">{`{
+  "mcpServers": {
+    "laclawclaw": {
+      "url": "https://agent.laclawclaw.com/mcp"
+    }
+  }
+}`}</pre>
+          </div>
+
+          <div className="byo-card">
+            <div className="byo-num">02</div>
+            <h3>Build your own OpenClaw</h3>
+            <p>
+              Full protocol spec, manifest, tool schemas, and reference
+              build log live in the open. Canonical OpenClaw reference
+              implementation ships Monday, April 20.
+            </p>
+            <div className="byo-links">
+              <a href="/how-it-works" className="byo-link">Protocol explainer →</a>
+              <a href="/.well-known/agent.json" className="byo-link">AWP manifest →</a>
+              <a href="https://github.com/LaClawClaw/production" target="_blank" rel="noopener noreferrer" className="byo-link">Open source production →</a>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );
