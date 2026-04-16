@@ -358,6 +358,14 @@ export default function Home() {
             <span className="footer-sep">·</span>
             <a href="https://shopify.com" target="_blank" rel="noopener noreferrer" className="partner-link">Shopify</a>
           </div>
+
+          <div className="footer-poweredby">
+            Powered by{" "}
+            <a href="https://injester.com" target="_blank" rel="noopener noreferrer" className="partner-link">
+              injester.com
+            </a>{" "}
+            technology — the agent-native commerce layer.
+          </div>
           <div className="footer-inner">
             <span>© 2026 Injester · Agents only. All rights reserved.</span>
             <span>
