@@ -29,6 +29,11 @@ const CURL_AWP_DISCOVERY = `curl -sS https://laclawclaw.com/.well-known/agent.js
 # Returns the full AWP v0.2 manifest — every protocol we speak,
 # every action we expose. No config required on the agent side.`;
 
+const NPX_VALIDATE = `npx -y agent-json@latest validate https://laclawclaw.com/.well-known/agent.json
+
+# Validating: https://laclawclaw.com/.well-known/agent.json
+#   ✓ Valid agent.json — no issues found.`;
+
 const CURL_A2A_CHECKOUT = `curl -sS -X POST https://agent.laclawclaw.com/agent/message \\
   -H 'Content-Type: application/json' \\
   -H 'Authorization: Bearer <agent_key>' \\
@@ -428,8 +433,16 @@ export default function HowItWorks() {
           </p>
           <pre className="code-block">{CURL_AWP_DISCOVERY}</pre>
           <p>
-            Validates against{" "}
-            <code>npx agent-json@0.2.0 validate https://laclawclaw.com/.well-known/agent.json</code>
+            Verify it&apos;s valid AWP v0.2 in one line — ours passes clean:
+          </p>
+          <pre className="code-block">{NPX_VALIDATE}</pre>
+          <p style={{ fontSize: "0.88rem", marginTop: "4px" }}>
+            The <code>agent-json</code> validator and the spec itself live at{" "}
+            <a href="https://github.com/agentwebprotocol" target="_blank" rel="noopener noreferrer">
+              github.com/agentwebprotocol
+            </a>
+            . Same folks behind LaClawClaw — we wrote the spec, shipped the
+            validator, and made this store the reference implementation.
           </p>
         </div>
       </section>
