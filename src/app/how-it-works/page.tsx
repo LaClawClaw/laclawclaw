@@ -245,6 +245,142 @@ export default function HowItWorks() {
         .footer-credit a { color: #9be7c9; text-decoration: none; }
         .footer-credit a:hover { text-decoration: underline; }
 
+        .umbrella-section code {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 0.88em;
+          color: #9be7c9;
+          background: rgba(155,231,201,0.08);
+          padding: 1px 6px;
+          border-radius: 3px;
+        }
+
+        .umbrella-diagram {
+          margin: 18px 0 28px;
+          padding: 28px 24px;
+          border-radius: 16px;
+          background: rgba(255,209,102,0.04);
+          border: 1px solid rgba(255,209,102,0.24);
+          display: grid;
+          gap: 22px;
+          justify-items: center;
+        }
+        .umbrella-top {
+          text-align: center;
+          padding: 14px 22px;
+          border-radius: 12px;
+          background: rgba(255,209,102,0.1);
+          border: 1px solid rgba(255,209,102,0.5);
+          display: grid;
+          gap: 4px;
+        }
+        .umbrella-label {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: #ffd166;
+          letter-spacing: -0.01em;
+        }
+        .umbrella-sub {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 0.78rem;
+          color: rgba(255,255,255,0.68);
+        }
+        .umbrella-spokes {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
+          width: 100%;
+          max-width: 760px;
+          position: relative;
+        }
+        .umbrella-spokes::before {
+          content: "";
+          position: absolute;
+          top: -18px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 1px;
+          height: 14px;
+          background: rgba(255,209,102,0.4);
+        }
+        @media (max-width: 680px) {
+          .umbrella-spokes { grid-template-columns: repeat(2, 1fr); }
+        }
+        .umbrella-spoke {
+          padding: 12px 14px;
+          border-radius: 10px;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.08);
+          display: grid;
+          gap: 2px;
+        }
+        .spoke-name {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-weight: 700;
+          color: #9be7c9;
+          font-size: 0.92rem;
+          letter-spacing: 0.02em;
+        }
+        .spoke-role {
+          font-size: 0.78rem;
+          color: rgba(255,255,255,0.62);
+          line-height: 1.35;
+        }
+
+        .umbrella-principles-title {
+          margin: 28px 0 12px;
+          font-size: 1.15rem;
+          font-weight: 700;
+          color: rgba(255,255,255,0.88);
+          letter-spacing: -0.01em;
+        }
+        .umbrella-principles {
+          display: grid;
+          gap: 10px;
+        }
+        .principle {
+          display: grid;
+          grid-template-columns: 44px 1fr;
+          gap: 14px;
+          padding: 14px 16px;
+          border-radius: 12px;
+          background: rgba(255,255,255,0.025);
+          border: 1px solid rgba(255,255,255,0.06);
+        }
+        .principle-num {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 0.86rem;
+          color: rgba(255,209,102,0.85);
+          font-weight: 700;
+          padding-top: 3px;
+        }
+        .principle-body {
+          display: grid;
+          gap: 4px;
+        }
+        .principle-title {
+          font-size: 0.98rem;
+          font-weight: 600;
+          color: #fff;
+        }
+        .principle-body p {
+          margin: 0;
+          font-size: 0.9rem;
+          color: rgba(255,255,255,0.7);
+          line-height: 1.55;
+        }
+        .principle-body em {
+          color: rgba(255,255,255,0.88);
+          font-style: italic;
+        }
+        .umbrella-close {
+          margin-top: 16px;
+          padding: 14px 18px;
+          border-left: 2px solid #ffd166;
+          color: rgba(255,255,255,0.78);
+          font-size: 0.95rem;
+          line-height: 1.55;
+        }
+
         .partner-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -338,6 +474,118 @@ export default function HowItWorks() {
           <span className="proto-badge"><strong>MCP</strong> 2025-06-18</span>
           <span className="proto-badge"><strong>Stripe</strong> Payment Links</span>
         </div>
+      </section>
+
+      <section className="section umbrella-section">
+        <h2>AWP is the umbrella. <span className="dim">Every other agent protocol is a sibling.</span></h2>
+        <p>
+          AWP doesn&apos;t replace A2A, MCP, AP2, x402, or any other agent
+          standard. It&apos;s the layer above them — a single manifest at
+          <code> /.well-known/agent.json </code> that declares which of them a
+          site speaks and where to reach each. Agents read one URL, learn the
+          full capability surface, and pick the right pipe.
+        </p>
+
+        <div className="umbrella-diagram">
+          <div className="umbrella-top">
+            <div className="umbrella-label">AWP v0.2</div>
+            <div className="umbrella-sub">Discovery · /.well-known/agent.json</div>
+          </div>
+          <div className="umbrella-spokes">
+            <div className="umbrella-spoke">
+              <div className="spoke-name">A2A</div>
+              <div className="spoke-role">Agent-to-agent messaging</div>
+            </div>
+            <div className="umbrella-spoke">
+              <div className="spoke-name">MCP</div>
+              <div className="spoke-role">Tool invocation (Claude, Cursor, …)</div>
+            </div>
+            <div className="umbrella-spoke">
+              <div className="spoke-name">ACP</div>
+              <div className="spoke-role">Agent communication (IBM)</div>
+            </div>
+            <div className="umbrella-spoke">
+              <div className="spoke-name">AP2</div>
+              <div className="spoke-role">Agent payments (Google)</div>
+            </div>
+            <div className="umbrella-spoke">
+              <div className="spoke-name">x402</div>
+              <div className="spoke-role">HTTP 402 + crypto wallet</div>
+            </div>
+            <div className="umbrella-spoke">
+              <div className="spoke-name">Skyfire</div>
+              <div className="spoke-role">Agent identity + payments</div>
+            </div>
+            <div className="umbrella-spoke">
+              <div className="spoke-name">OpenAPI</div>
+              <div className="spoke-role">REST API description</div>
+            </div>
+            <div className="umbrella-spoke">
+              <div className="spoke-name">GraphQL</div>
+              <div className="spoke-role">Query-typed API description</div>
+            </div>
+            <div className="umbrella-spoke">
+              <div className="spoke-name">Stripe</div>
+              <div className="spoke-role">Payment link handoff</div>
+            </div>
+          </div>
+        </div>
+
+        <h3 className="umbrella-principles-title">How AWP stays thin as the ecosystem grows</h3>
+        <div className="umbrella-principles">
+          <div className="principle">
+            <div className="principle-num">01</div>
+            <div className="principle-body">
+              <div className="principle-title">Discovery, not transport</div>
+              <p>
+                AWP defines <em>what a site speaks</em> and <em>where to reach each protocol</em>. It never defines message envelopes, tool invocation, or payment semantics. Those live in the protocols AWP points at.
+              </p>
+            </div>
+          </div>
+          <div className="principle">
+            <div className="principle-num">02</div>
+            <div className="principle-body">
+              <div className="principle-title">Informative protocol registry</div>
+              <p>
+                v0.2 ships a known-identifier list (a2a, mcp, acp, ap2, x402, skyfire, openapi, graphql) — but sites can declare custom protocols. Agents MUST ignore unknown identifiers gracefully. This lets AWP stay ahead of new protocols without spec revisions.
+              </p>
+            </div>
+          </div>
+          <div className="principle">
+            <div className="principle-num">03</div>
+            <div className="principle-body">
+              <div className="principle-title">Composition via <code>via</code> + <code>operation</code></div>
+              <p>
+                Any action can route through any declared protocol using the <code>via</code> field. Adding a new protocol is one entry in the <code>protocols</code> block — zero AWP spec change needed.
+              </p>
+            </div>
+          </div>
+          <div className="principle">
+            <div className="principle-num">04</div>
+            <div className="principle-body">
+              <div className="principle-title">Capability negotiation (planned, v0.3)</div>
+              <p>
+                When a site speaks multiple protocols, agents need to pick. v0.3 will declare <code>preferred_order</code>, per-protocol capability flags (streaming, async, batch), health indicators, and fallback chains. Agents negotiate the pipe without extra roundtrips.
+              </p>
+            </div>
+          </div>
+          <div className="principle">
+            <div className="principle-num">05</div>
+            <div className="principle-body">
+              <div className="principle-title">Cross-cutting concerns at the AWP level</div>
+              <p>
+                Auth, rate limits, idempotency, agent identity — declared once at the manifest root, inherited by all protocols. This stops every new protocol from re-inventing the same primitives.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <p className="umbrella-close">
+          The meta-principle: keep the spec under 200 lines. If AWP grows past
+          that, it&apos;s absorbing semantics that belong elsewhere.
+          That&apos;s the discipline that made <code>robots.txt</code> survive
+          thirty years.
+        </p>
       </section>
 
       <section className="section">
