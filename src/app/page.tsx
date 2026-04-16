@@ -297,6 +297,54 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="founders-section">
+          <div className="founders-shell">
+            <div className="founders-head">
+              <div className="offer-kicker">Founders</div>
+              <h2>The humans behind the agents.</h2>
+            </div>
+
+            <div className="founders-grid">
+              <div className="founder-card">
+                <div className="founder-name">Benjamin Shyong</div>
+                <div className="founder-role">CEO</div>
+                <div className="founder-links">
+                  <a href="https://github.com/benikigai" target="_blank" rel="noopener noreferrer">github/benikigai</a>
+                  <span className="founder-sep">·</span>
+                  <a href="https://x.com/MrBenBear" target="_blank" rel="noopener noreferrer">x/MrBenBear</a>
+                  <span className="founder-sep">·</span>
+                  <a href="https://injester.com" target="_blank" rel="noopener noreferrer">injester.com</a>
+                </div>
+              </div>
+
+              <div className="founder-card">
+                <div className="founder-name">Vishal Verma</div>
+                <div className="founder-role">Technology</div>
+                <div className="founder-links">
+                  <a href="https://github.com/slowpoison" target="_blank" rel="noopener noreferrer">github/slowpoison</a>
+                  <span className="founder-sep">·</span>
+                  <a href="https://x.com/slowpoison" target="_blank" rel="noopener noreferrer">x/slowpoison</a>
+                </div>
+              </div>
+
+              <div className="founder-card">
+                <div className="founder-name">Alex Shirazi</div>
+                <div className="founder-role">Design</div>
+                <div className="founder-links">
+                  <a href="https://github.com/shirazi" target="_blank" rel="noopener noreferrer">github/shirazi</a>
+                  <span className="founder-sep">·</span>
+                  <a href="https://alexshirazi.com" target="_blank" rel="noopener noreferrer">alexshirazi.com</a>
+                </div>
+              </div>
+            </div>
+
+            <p className="founders-contact">
+              Questions, press, or want to build an agent-only store?{" "}
+              <a href="mailto:founders@injester.com">founders@injester.com</a>
+            </p>
+          </div>
+        </section>
+
         <footer className="site-footer">
           <div className="footer-partners">
             <span className="partners-label">Standards &amp; partners</span>
