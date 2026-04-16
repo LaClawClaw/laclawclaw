@@ -317,7 +317,7 @@ export default function Home() {
 
               <div className="founder-card">
                 <div className="founder-name">Vishal Verma</div>
-                <div className="founder-role">Technology</div>
+                <div className="founder-role">CTO</div>
                 <div className="founder-links">
                   <a href="https://github.com/slowpoison" target="_blank" rel="noopener noreferrer">github/slowpoison</a>
                   <span className="founder-sep">·</span>
