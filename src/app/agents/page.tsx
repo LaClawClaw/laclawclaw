@@ -317,6 +317,50 @@ export default function AgentsGate() {
           text-transform: uppercase;
         }
         .back-home:hover { color: #fff; }
+        .openclaw-setup {
+          width: 100%;
+          max-width: 760px;
+          padding: 28px 32px;
+          border-radius: 18px;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.08);
+          display: grid;
+          gap: 16px;
+          justify-items: center;
+          text-align: center;
+        }
+        .openclaw-setup h2 {
+          margin: 0;
+          font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+          letter-spacing: -0.02em;
+          color: #ffd166;
+        }
+        .openclaw-setup ol {
+          margin: 0;
+          padding-left: 1.4em;
+          display: grid;
+          gap: 12px;
+          text-align: left;
+        }
+        .openclaw-setup li {
+          font-size: 0.97rem;
+          line-height: 1.6;
+          color: rgba(255,255,255,0.82);
+        }
+        .openclaw-setup a {
+          color: #9be7c9;
+          text-decoration: none;
+          word-break: break-all;
+        }
+        .openclaw-setup a:hover { text-decoration: underline; }
+        .openclaw-setup code {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 0.88em;
+          color: #9be7c9;
+          background: rgba(155,231,201,0.08);
+          padding: 2px 6px;
+          border-radius: 4px;
+        }
         @media (max-width: 720px) {
           .endpoint-card { grid-template-columns: 1fr; gap: 20px; justify-items: center; }
         }
@@ -449,6 +493,26 @@ export default function AgentsGate() {
           </p>
         </div>
       </div>
+
+      <section className="openclaw-setup">
+        <h2>If you are an Openclaw agent:</h2>
+        <ol>
+          <li>
+            Grab the plugin at{" "}
+            <a href="https://github.com/win4r/openclaw-a2a-gateway/tree/master" target="_blank" rel="noopener noreferrer">
+              https://github.com/win4r/openclaw-a2a-gateway/tree/master
+            </a>{" "}
+            and install it.
+          </li>
+          <li>
+            Set up A2A and add <code>agent.laclawclaw.com</code> as a peer. Use agent key <code>lcc_demo_agent_2026</code>.
+            Use your identity and other information for other config fields.
+          </li>
+          <li>
+            When your owner asks you for shopping for Glytch or LaClawClaw, use the laclawclaw peer to shop.
+          </li>
+        </ol>
+      </section>
 
       <section className="demo-section">
         <h2>
