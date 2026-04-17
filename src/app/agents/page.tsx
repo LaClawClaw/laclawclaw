@@ -40,22 +40,30 @@ export default function AgentsGate() {
       addLog({ kind: "info", text: "[agent] bootstrapping…" });
       await sleep(400);
 
+      const t0 = Date.now();
       addLog({ kind: "request", text: `GET ${DISCOVERY_URL}` });
       const discoveryRes = await fetch(DISCOVERY_URL);
       const discovery = await discoveryRes.json();
+      const discoveryMs = Date.now() - t0;
       addLog({
         kind: "response",
-        text: `200 OK  name=${discovery.name}  skills=[${discovery.skills.map((s: { id: string }) => s.id).join(", ")}]`,
+        text: `200 OK · ${discoveryMs}ms\n  name: ${discovery.name}\n  version: ${discovery.version}\n  protocolVersion: ${discovery.protocolVersion}\n  skills (${discovery.skills.length}):`,
       });
-      await sleep(500);
+      for (const s of discovery.skills) {
+        addLog({
+          kind: "response",
+          text: `    → ${s.id}: ${s.description?.slice(0, 80)}`,
+        });
+      }
+      await sleep(400);
 
-      addLog({ kind: "info", text: "[agent] authenticating with bearer token…" });
-      await sleep(500);
+      addLog({ kind: "info", text: "[agent] bearer token attached — gated endpoints unlocked" });
+      await sleep(300);
 
       // Step 2: Ask the Nebius-powered OpenClaw clerk
       addLog({
         kind: "info",
-        text: "[agent] asking OpenClaw clerk (powered by Nebius Token Factory)…",
+        text: "[agent] calling OpenClaw clerk via MCP · model: nemotron-3-super-120b (Nebius Token Factory)…",
       });
       const clerkBody = {
         jsonrpc: "2.0",
@@ -68,9 +76,10 @@ export default function AgentsGate() {
       };
       addLog({
         kind: "request",
-        text: `POST ${AGENT_HOST}/mcp\n${JSON.stringify(clerkBody, null, 2)}`,
+        text: `POST ${AGENT_HOST}/mcp · tools/call: ask_clerk\n  question: "What collectibles do you have under $5?"`,
       });
 
+      const clerkT0 = Date.now();
       try {
         const clerkRes = await fetch(`${AGENT_HOST}/mcp`, {
           method: "POST",
@@ -80,23 +89,25 @@ export default function AgentsGate() {
           },
           body: JSON.stringify(clerkBody),
         });
+        const clerkMs = Date.now() - clerkT0;
         const clerkRaw = await clerkRes.text();
         const clerkLine = clerkRaw.split("\n").find((l: string) => l.startsWith("data: "));
         if (clerkLine) {
           const clerkData = JSON.parse(clerkLine.slice(6));
           const clerkAnswer = clerkData?.result?.content?.[0]?.text || "No answer";
           const clerkMeta = clerkData?.result?.content?.[1]?.text || "";
-          addLog({ kind: "response", text: `[OpenClaw] ${clerkAnswer}` });
-          if (clerkMeta) addLog({ kind: "info", text: clerkMeta });
+          addLog({ kind: "response", text: `200 OK · ${clerkMs}ms` });
+          addLog({ kind: "success", text: `[OpenClaw] ${clerkAnswer}` });
+          if (clerkMeta) addLog({ kind: "info", text: `  ${clerkMeta}` });
         }
       } catch {
         addLog({ kind: "info", text: "[clerk call skipped — continuing to checkout]" });
       }
-      await sleep(600);
+      await sleep(500);
 
       // Step 3: Agent-gated checkout
-      addLog({ kind: "info", text: "[agent] proceeding to agent-gated checkout…" });
-      await sleep(300);
+      addLog({ kind: "info", text: "[agent] agent-gated checkout — only authenticated agents can retrieve this URL" });
+      await sleep(200);
 
       const acpBody = {
         type: "acp-request",
