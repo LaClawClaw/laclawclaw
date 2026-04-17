@@ -52,6 +52,52 @@ export default function AgentsGate() {
       addLog({ kind: "info", text: "[agent] authenticating with bearer token…" });
       await sleep(500);
 
+      // Step 2: Ask the Nebius-powered OpenClaw clerk
+      addLog({
+        kind: "info",
+        text: "[agent] asking OpenClaw clerk (powered by Nebius Token Factory)…",
+      });
+      const clerkBody = {
+        jsonrpc: "2.0",
+        id: 10,
+        method: "tools/call",
+        params: {
+          name: "ask_clerk",
+          arguments: { question: "What collectibles do you have under $5?" },
+        },
+      };
+      addLog({
+        kind: "request",
+        text: `POST ${AGENT_HOST}/mcp\n${JSON.stringify(clerkBody, null, 2)}`,
+      });
+
+      try {
+        const clerkRes = await fetch(`${AGENT_HOST}/mcp`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json, text/event-stream",
+          },
+          body: JSON.stringify(clerkBody),
+        });
+        const clerkRaw = await clerkRes.text();
+        const clerkLine = clerkRaw.split("\n").find((l: string) => l.startsWith("data: "));
+        if (clerkLine) {
+          const clerkData = JSON.parse(clerkLine.slice(6));
+          const clerkAnswer = clerkData?.result?.content?.[0]?.text || "No answer";
+          const clerkMeta = clerkData?.result?.content?.[1]?.text || "";
+          addLog({ kind: "response", text: `[OpenClaw] ${clerkAnswer}` });
+          if (clerkMeta) addLog({ kind: "info", text: clerkMeta });
+        }
+      } catch {
+        addLog({ kind: "info", text: "[clerk call skipped — continuing to checkout]" });
+      }
+      await sleep(600);
+
+      // Step 3: Agent-gated checkout
+      addLog({ kind: "info", text: "[agent] proceeding to agent-gated checkout…" });
+      await sleep(300);
+
       const acpBody = {
         type: "acp-request",
         from: "demo-agent",
