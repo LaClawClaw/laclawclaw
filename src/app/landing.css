@@ -195,6 +195,32 @@ body.landing-page.is-loaded .site-shell {
   animation-delay: 6s;
 }
 
+.eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.awp-badge {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  padding: 6px 10px;
+  border: 1px solid rgba(155, 231, 201, 0.28);
+  background: rgba(155, 231, 201, 0.06);
+  color: #9be7c9;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 180ms ease, border-color 180ms ease;
+  white-space: nowrap;
+}
+.awp-badge:hover {
+  background: rgba(155, 231, 201, 0.14);
+  border-color: rgba(155, 231, 201, 0.5);
+}
+
 .eyebrow {
   letter-spacing: 0.22em;
   text-transform: uppercase;

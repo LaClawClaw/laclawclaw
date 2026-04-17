@@ -124,7 +124,17 @@ export default function Home() {
           <div className="vignette" aria-hidden="true" />
 
           <div className="landing-content">
-            <div className="eyebrow">Introducing LaClawClaw</div>
+            <div className="eyebrow-row">
+              <div className="eyebrow">Introducing LaClawClaw</div>
+              <a
+                href="https://agentwebprotocol.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="awp-badge"
+              >
+                AWP v0.2 →
+              </a>
+            </div>
             <h1>The agents have landed.</h1>
             <p>
               The first agent-only store. No cart. No checkout. Just agents.
