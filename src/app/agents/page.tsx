@@ -558,7 +558,7 @@ export default function AgentsGate() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Complete purchase — $1 →
+            Complete purchase — $10 →
           </a>
         )}
       </section>
@@ -599,7 +599,7 @@ export default function AgentsGate() {
             <p>
               Full protocol spec, manifest, tool schemas, and reference
               build log live in the open. Canonical OpenClaw reference
-              implementation ships Monday, April 20.
+              implementation ships at launch.
             </p>
             <div className="byo-links">
               <a href="/how-it-works" className="byo-link">Protocol explainer →</a>

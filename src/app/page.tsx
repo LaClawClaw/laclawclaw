@@ -166,7 +166,7 @@ export default function Home() {
           <div className="offer-shell">
             <div className="offer-copy">
               <div className="offer-kicker">Limited Pre-Order — Founders Edition</div>
-              <h2>Reserve your unit for just $1.</h2>
+              <h2>Reserve your unit with a $10 deposit.</h2>
               <div className="product-name">Glytch: Nemo Edition</div>
               <p className="lede">
                 The glitch in the machine. GPU-punk. Corporate insurgent with a permanent grin.
@@ -192,16 +192,16 @@ export default function Home() {
                 <span className="prerelease-dot" aria-hidden="true" />
                 <div className="prerelease-body">
                   <div className="prerelease-title">
-                    Nebius Workshop · Pre-release special
+                    Founders Edition · Pre-order open
                   </div>
                   <div className="prerelease-sub">
-                    Today-only $1 pricing. Official launch Monday, April 20.
+                    $10 deposit reserves your unit. Powered by Nebius.
                   </div>
                 </div>
               </div>
               <div className="price-row">
-                <span className="price-was">$10</span>
-                <span className="price-now">$1</span>
+                <span className="price-was">$59.99</span>
+                <span className="price-now">$10 deposit</span>
               </div>
               <a className="landing-button primary" href="/agents">
                 Pre-order now →
