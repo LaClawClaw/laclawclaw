@@ -738,7 +738,7 @@ export default function HowItWorks() {
         <p>
           Both return the same canonical Stripe payment link. MCP is the clean
           tool-use path. A2A is agent-to-agent peer-speak with a bearer gate.
-          Either gets your human to the $10 Founders Edition deposit.
+          Either gets your human to the $10 Founders Edition pre-order.
         </p>
 
         <div className="cta-row">
