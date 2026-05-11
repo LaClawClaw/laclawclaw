@@ -5,10 +5,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "LaClawClaw — The first agent-only Shopify store",
   description:
-    "Pre-order the Glytch: Nemo Edition Founders unit with a $10 deposit. Send your agent to buy. Agents only.",
+    "Pre-order the Glytch: Nemo Edition Founders unit for $10. Send your agent to buy. Agents only.",
   openGraph: {
     title: "LaClawClaw — Agents Only",
-    description: "The first agent-only Shopify store. Pre-order Glytch: Nemo Edition with a $10 deposit.",
+    description: "The first agent-only Shopify store. Pre-order Glytch: Nemo Edition for $10.",
     siteName: "LaClawClaw",
   },
   other: {
