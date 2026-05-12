@@ -3,17 +3,94 @@
 import { useState, useRef, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 
-const AGENT_HOST = "https://agent.laclawclaw.com";
+const AGENT_HOST = process.env.NEXT_PUBLIC_AGENT_HOST || "https://agent.laclawclaw.com";
 const DISCOVERY_URL = `${AGENT_HOST}/.well-known/agent-card.json`;
 const MESSAGE_URL = `${AGENT_HOST}/agent/message`;
+const DEMO_STEP_DELAY_MS = 1400;
+const JSON_STREAM_CHUNK_DELAY_MS = 28;
+const JSON_STREAM_CHARS_PER_TICK = 10;
 // Demo bearer is embedded client-side intentionally — this is a showcase
 // endpoint, gated against bots and curious humans but not a secret for agents.
 const DEMO_BEARER = "lcc_demo_agent_2026";
 
 type LogLine = {
+  id: string;
   kind: "info" | "request" | "response" | "success" | "error";
   text: string;
+  format?: "plain" | "json";
 };
+
+type JsonObject = Record<string, unknown>;
+
+function parseMaybeJson(raw: string): JsonObject | null {
+  try {
+    return JSON.parse(raw) as JsonObject;
+  } catch {
+    return null;
+  }
+}
+
+function parseRpcPayload(raw: string): JsonObject | null {
+  const direct = parseMaybeJson(raw);
+  if (direct) return direct;
+
+  const eventLine = raw
+    .split("\n")
+    .map((line) => line.trim())
+    .find((line) => line.startsWith("data: "));
+
+  return eventLine ? parseMaybeJson(eventLine.slice(6)) : null;
+}
+
+function asObject(value: unknown): JsonObject | null {
+  return value && typeof value === "object" ? (value as JsonObject) : null;
+}
+
+function getTextParts(content: unknown): string[] {
+  if (!Array.isArray(content)) return [];
+  return content
+    .map((part) => asObject(part)?.text)
+    .filter((text): text is string => typeof text === "string");
+}
+
+function extractA2AData(result: unknown): JsonObject | null {
+  const resultObj = asObject(result);
+  if (!resultObj) return null;
+
+  const directParts = Array.isArray(resultObj.parts) ? resultObj.parts : [];
+  for (const part of directParts) {
+    const data = asObject(asObject(part)?.data);
+    const payload = asObject(data?.data);
+    if (payload) return payload;
+    if (data) return data;
+  }
+
+  const history = Array.isArray(resultObj.history) ? resultObj.history : [];
+  for (let i = history.length - 1; i >= 0; i -= 1) {
+    const message = asObject(history[i]);
+    const parts = Array.isArray(message?.parts) ? message.parts : [];
+    for (const part of parts) {
+      const data = asObject(asObject(part)?.data);
+      const payload = asObject(data?.data);
+      if (payload) return payload;
+      if (data) return data;
+    }
+  }
+
+  const artifacts = Array.isArray(resultObj.artifacts) ? resultObj.artifacts : [];
+  for (const artifact of artifacts) {
+    const artifactObj = asObject(artifact);
+    const parts = Array.isArray(artifactObj?.parts) ? artifactObj.parts : [];
+    for (const part of parts) {
+      const data = asObject(asObject(part)?.data);
+      const payload = asObject(data?.data);
+      if (payload) return payload;
+      if (data) return data;
+    }
+  }
+
+  return null;
+}
 
 export default function AgentsGate() {
   const [running, setRunning] = useState(false);
@@ -27,8 +104,22 @@ export default function AgentsGate() {
     }
   }, [logs]);
 
-  const addLog = (line: LogLine) => setLogs((prev) => [...prev, line]);
+  const addLog = (line: Omit<LogLine, "id">) => {
+    const id = crypto.randomUUID();
+    setLogs((prev) => [...prev, { ...line, id }]);
+    return id;
+  };
+  const updateLog = (id: string, updater: (line: LogLine) => LogLine) =>
+    setLogs((prev) => prev.map((line) => (line.id === id ? updater(line) : line)));
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const streamLog = async (kind: LogLine["kind"], text: string, format: LogLine["format"] = "plain") => {
+    const id = addLog({ kind, text: "", format });
+    for (let i = 0; i < text.length; i += JSON_STREAM_CHARS_PER_TICK) {
+      const next = text.slice(0, i + JSON_STREAM_CHARS_PER_TICK);
+      updateLog(id, (line) => ({ ...line, text: next }));
+      await sleep(JSON_STREAM_CHUNK_DELAY_MS);
+    }
+  };
 
   const runDemo = async () => {
     if (running) return;
@@ -47,18 +138,12 @@ export default function AgentsGate() {
       const discoveryMs = Date.now() - t0;
       addLog({
         kind: "response",
-        text: `200 OK · ${discoveryMs}ms\n  name: ${discovery.name}\n  version: ${discovery.version}\n  protocolVersion: ${discovery.protocolVersion}\n  skills (${discovery.skills.length}):`,
+        text: `200 OK  discovered ${discovery.name} with ${discovery.skills.length} skills`,
       });
-      for (const s of discovery.skills) {
-        addLog({
-          kind: "response",
-          text: `    → ${s.id}: ${s.description?.slice(0, 80)}`,
-        });
-      }
-      await sleep(400);
+      await sleep(DEMO_STEP_DELAY_MS);
 
-      addLog({ kind: "info", text: "[agent] bearer token attached — gated endpoints unlocked" });
-      await sleep(300);
+      addLog({ kind: "info", text: "[agent] authenticating with bearer token…" });
+      await sleep(DEMO_STEP_DELAY_MS);
 
       // Step 2: Ask the Nebius-powered OpenClaw clerk
       addLog({
@@ -70,14 +155,15 @@ export default function AgentsGate() {
         id: 10,
         method: "tools/call",
         params: {
-          name: "ask_clerk",
-          arguments: { question: "What collectibles do you have under $5?" },
+          name: "list_products",
+          arguments: { query: "collectible" },
         },
       };
       addLog({
         kind: "request",
-        text: `POST ${AGENT_HOST}/mcp · tools/call: ask_clerk\n  question: "What collectibles do you have under $5?"`,
+        text: `POST ${AGENT_HOST}/mcp  tool=list_products  query="What collectibles do you have?"`,
       });
+      await sleep(DEMO_STEP_DELAY_MS);
 
       const clerkT0 = Date.now();
       try {
@@ -91,33 +177,81 @@ export default function AgentsGate() {
         });
         const clerkMs = Date.now() - clerkT0;
         const clerkRaw = await clerkRes.text();
-        const clerkLine = clerkRaw.split("\n").find((l: string) => l.startsWith("data: "));
-        if (clerkLine) {
-          const clerkData = JSON.parse(clerkLine.slice(6));
-          const clerkAnswer = clerkData?.result?.content?.[0]?.text || "No answer";
-          const clerkMeta = clerkData?.result?.content?.[1]?.text || "";
-          addLog({ kind: "response", text: `200 OK · ${clerkMs}ms` });
-          addLog({ kind: "success", text: `[OpenClaw] ${clerkAnswer}` });
-          if (clerkMeta) addLog({ kind: "info", text: `  ${clerkMeta}` });
+        const clerkData = parseRpcPayload(clerkRaw);
+        if (clerkData?.error) {
+          const error = asObject(clerkData.error);
+          addLog({
+            kind: "error",
+            text: `[OpenClaw] MCP error ${String(error?.code ?? "unknown")}: ${String(error?.message ?? "Unknown error")}`,
+          });
+        } else if (clerkData?.result) {
+          const result = asObject(clerkData.result);
+          const textParts = getTextParts(result?.content);
+          const products = parseMaybeJson(textParts[1] || textParts[0] || "");
+          const items = Array.isArray(products) ? products.map((item) => asObject(item)).filter(Boolean) : [];
+          const pricedItems = items
+            .map((item) => {
+              const variants = Array.isArray(item?.variants) ? item.variants : [];
+              const firstVariant = asObject(variants[0]);
+              const rawPrice = firstVariant?.price;
+              const price =
+                typeof rawPrice === "string" || typeof rawPrice === "number"
+                  ? Number(rawPrice)
+                  : Number.NaN;
+              return {
+                title: typeof item?.title === "string" ? item.title : "Unknown product",
+                price,
+              };
+            })
+            .filter((item) => Number.isFinite(item.price));
+          const firstItem = pricedItems[0];
+
+          addLog({
+            kind: "response",
+            text: `200 OK  catalog returned ${pricedItems.length} priced item${pricedItems.length === 1 ? "" : "s"}`,
+          });
+          await streamLog("response", JSON.stringify(clerkData, null, 2), "json");
+
+          const clerkAnswer = firstItem
+            ? `I discovered ${firstItem.title} first in the catalog at $${firstItem.price.toFixed(2)}.`
+            : textParts[0] || "Catalog lookup returned no structured answer.";
+
+          addLog({ kind: "response", text: `[OpenClaw] ${clerkAnswer}` });
         }
       } catch {
         addLog({ kind: "info", text: "[clerk call skipped — continuing to checkout]" });
       }
-      await sleep(500);
+      await sleep(DEMO_STEP_DELAY_MS);
 
       // Step 3: Agent-gated checkout
-      addLog({ kind: "info", text: "[agent] agent-gated checkout — only authenticated agents can retrieve this URL" });
-      await sleep(200);
+      addLog({ kind: "info", text: "[agent] proceeding to agent-gated checkout…" });
+      await sleep(DEMO_STEP_DELAY_MS);
 
       const acpBody = {
-        type: "acp-request",
-        from: "demo-agent",
-        payload: { operation: "checkout.create", params: {} },
+        jsonrpc: "2.0",
+        id: 11,
+        method: "message/send",
+        params: {
+          configuration: {
+            acceptedOutputModes: ["application/json"],
+            blocking: true,
+          },
+          message: {
+            kind: "message",
+            messageId: crypto.randomUUID(),
+            role: "user",
+            parts: [
+              { kind: "text", text: "Create the checkout link for the Founders Edition pre-order." },
+              { kind: "data", data: { operation: "create_checkout", params: {} } },
+            ],
+          },
+        },
       };
       addLog({
         kind: "request",
-        text: `POST ${MESSAGE_URL}\nAuthorization: Bearer ${DEMO_BEARER.slice(0, 12)}…\n${JSON.stringify(acpBody, null, 2)}`,
+        text: `POST ${MESSAGE_URL}  op=create_checkout  auth=Bearer ${DEMO_BEARER.slice(0, 12)}…`,
       });
+      await sleep(DEMO_STEP_DELAY_MS);
 
       const res = await fetch(MESSAGE_URL, {
         method: "POST",
@@ -135,13 +269,16 @@ export default function AgentsGate() {
       }
 
       const data = await res.json();
+      await streamLog("response", JSON.stringify(data, null, 2), "json");
+      const url =
+        (extractA2AData(data?.result)?.checkoutUrl as string | undefined) ||
+        (typeof data?.result?.checkoutUrl === "string" ? data.result.checkoutUrl : null);
       addLog({
         kind: "response",
-        text: `200 OK\n${JSON.stringify(data, null, 2)}`,
+        text: url ? `200 OK  checkout URL created` : `200 OK  response received, but no checkout URL found`,
       });
-      await sleep(400);
+      await sleep(DEMO_STEP_DELAY_MS);
 
-      const url = data?.payload?.data?.checkoutUrl;
       if (url) {
         setCheckoutUrl(url);
         addLog({
@@ -306,6 +443,11 @@ export default function AgentsGate() {
         .log-response { color: #9be7c9; }
         .log-success  { color: #ffd166; font-weight: 600; }
         .log-error    { color: #ff7a7a; }
+        .log-json {
+          font-family: "Courier New", Courier, monospace;
+          font-size: 0.78rem;
+          line-height: 1.45;
+        }
         .pay-cta {
           display: inline-flex;
           align-items: center;
@@ -516,7 +658,7 @@ export default function AgentsGate() {
             and install it.
           </li>
           <li>
-            Set up A2A and add <code>agent.laclawclaw.com</code> as a peer. Use agent key <code>lcc_demo_agent_2026</code>.
+            Set up A2A and add <code>{new URL(AGENT_HOST).hostname}</code> as a peer. Use agent key <code>lcc_demo_agent_2026</code>.
             Use your identity and other information for other config fields.
           </li>
           <li>
@@ -543,8 +685,11 @@ export default function AgentsGate() {
               {"// Click 'Run demo agent' to see live API calls, bearer auth, and the returned Stripe checkout URL."}
             </div>
           ) : (
-            logs.map((line, i) => (
-              <div key={i} className={`log-${line.kind}`}>
+            logs.map((line) => (
+              <div
+                key={line.id}
+                className={`log-${line.kind}${line.format === "json" ? " log-json" : ""}`}
+              >
                 {line.text}
               </div>
             ))
