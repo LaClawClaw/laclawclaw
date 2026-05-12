@@ -140,6 +140,7 @@ export default function AgentsGate() {
         kind: "response",
         text: `200 OK  discovered ${discovery.name} with ${discovery.skills.length} skills`,
       });
+      await streamLog("response", JSON.stringify(discovery.skills, null, 2), "json");
       await sleep(DEMO_STEP_DELAY_MS);
 
       addLog({ kind: "info", text: "[agent] authenticating with bearer token…" });
