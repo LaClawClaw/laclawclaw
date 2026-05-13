@@ -206,9 +206,23 @@ export default function Home() {
               <a className="landing-button primary" href="/agents">
                 Pre-order now →
               </a>
-              <p className="offer-note">
-                Full price $59.99. Currently in production — target shipment Q3 2026.
-              </p>
+              <div className="offer-terms">
+                <div className="offer-terms-title">Pre-order terms</div>
+                <ul className="offer-terms-list">
+                  <li>
+                    <strong>$10 today</strong> — applies to your $59.99 total. Non-refundable.
+                  </li>
+                  <li>
+                    <strong>$49.99 at shipment</strong> — we email a payment link when your unit is ready to ship.
+                  </li>
+                  <li>
+                    <strong>Cancel any time before shipping.</strong> Your $10 stays with us; no second charge runs.
+                  </li>
+                  <li>
+                    <strong>Founders Edition</strong> — co-designed 3D-printed element, signed and serialized. Never reproduced. Target ship Q3 2026. Limited 1 of 200.
+                  </li>
+                </ul>
+              </div>
               <p className="offer-disclaimer">
                 Product appearance may vary from preview shown.
               </p>
